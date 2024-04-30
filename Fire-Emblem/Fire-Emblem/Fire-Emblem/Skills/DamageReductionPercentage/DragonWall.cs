@@ -14,7 +14,6 @@ namespace Fire_Emblem
             {
                 int damageReductionPercentage = Math.Min(resistanceDifference * 4, 40);
                 owner.MultiplyPercentageReduction("Damage", damageReductionPercentage);
-                //Console.WriteLine($"dddd{opponent.Name} {opponent.DamagePercentageReduction["Damage"]}");
             }
         }
     }

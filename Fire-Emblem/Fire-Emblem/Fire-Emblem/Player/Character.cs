@@ -30,7 +30,7 @@ public class Character
     public Dictionary<string, int> TemporaryFollowUpBonuses { get; private set; }
     public Dictionary<string, int> TemporaryFollowUpPenalties { get; private set; }
     
-    public Dictionary<string, double> DamagePercentageReduction { get; private set; }
+    public Dictionary<string, double> PercentageReduction { get; private set; }
     
     public bool AreAtkBonusesEnabled { get; set; } = true;
     public bool AreDefBonusesEnabled { get; set; } = true;
@@ -46,7 +46,7 @@ public class Character
         Skills = new List<Skill>();
         TemporaryBonuses = new Dictionary<string, int>();
         TemporaryPenalties = new Dictionary<string, int>();
-        DamagePercentageReduction = new Dictionary<string, double>();
+        PercentageReduction = new Dictionary<string, double>();
         TemporaryFirstAttackBonuses = new Dictionary<string, int>();
         TemporaryFirstAttackPenalties = new Dictionary<string, int>();
         TemporaryFollowUpBonuses = new Dictionary<string, int>();
@@ -209,7 +209,7 @@ public class Character
 
     public void MultiplyPercentageReduction(string attribute, int value)
     {
-        MultiplyToAttributeDictionary(DamagePercentageReduction, attribute, value);
+        MultiplyToAttributeDictionary(PercentageReduction, attribute, value);
     }
     public void CleanBonuses()
     {
@@ -241,7 +241,7 @@ public class Character
 
     public void CleanPercentageReduction()
     {
-        DamagePercentageReduction.Clear();
+        PercentageReduction.Clear();
     }
     
 }

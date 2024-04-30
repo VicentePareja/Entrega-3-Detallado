@@ -242,7 +242,7 @@ namespace Fire_Emblem
             
             foreach (var stat in statsOrder)
             {
-                double reduction = character.DamagePercentageReduction.ContainsKey(stat) ? character.DamagePercentageReduction[stat] : 0.0;
+                double reduction = character.PercentageReduction.ContainsKey(stat) ? character.PercentageReduction[stat] : 0.0;
                 if (reduction != 0.0)
                 {
                     _view.WriteLine($"{character.Name} reducirá el daño de los ataques del rival en un {reduction}%");

@@ -32,7 +32,7 @@ public class Attack
         int damage = (int)((attackerAtk * weaponTriangleBonus) - defenderDef);
         damage = Math.Max(damage, 0);
         
-        double reduction = Defender.DamagePercentageReduction.ContainsKey("Damage") ? Defender.DamagePercentageReduction["Damage"] : 0;
+        double reduction = Defender.PercentageReduction.ContainsKey("Damage") ? Defender.PercentageReduction["Damage"] : 0;
         damage = CalculateDamage(damage, reduction);
 
         _view.WriteLine($"{Attacker.Name} ataca a {Defender.Name} con {damage} de daño");
@@ -50,7 +50,7 @@ public class Attack
         int damage = (int)((defenderAtk * weaponTriangleBonus) - attackerDef);
         damage = Math.Max(damage, 0);
         
-        double reduction = Attacker.DamagePercentageReduction.ContainsKey("Damage") ? Attacker.DamagePercentageReduction["Damage"] : 0;
+        double reduction = Attacker.PercentageReduction.ContainsKey("Damage") ? Attacker.PercentageReduction["Damage"] : 0;
         damage = CalculateDamage(damage, reduction);
 
         _view.WriteLine($"{Defender.Name} ataca a {Attacker.Name} con {damage} de daño");
@@ -68,7 +68,7 @@ public class Attack
         int damage = (int)((attackerAtk * weaponTriangleBonus) - defenderDef);
         damage = Math.Max(damage, 0);
         
-        double reduction = Defender.DamagePercentageReduction.ContainsKey("Damage") ? Defender.DamagePercentageReduction["Damage"] : 0;
+        double reduction = Defender.PercentageReduction.ContainsKey("Damage") ? Defender.PercentageReduction["Damage"] : 0;
         damage = CalculateDamage(damage, reduction);
 
         _view.WriteLine($"{Attacker.Name} ataca a {Defender.Name} con {damage} de daño");
@@ -86,7 +86,7 @@ public class Attack
         int damage = (int)((defenderAtk * weaponTriangleBonus) - attackerDef);
         damage = Math.Max(damage, 0);
         
-        double reduction = Attacker.DamagePercentageReduction.ContainsKey("Damage") ? Attacker.DamagePercentageReduction["Damage"] : 0;
+        double reduction = Attacker.PercentageReduction.ContainsKey("Damage") ? Attacker.PercentageReduction["Damage"] : 0;
         damage = CalculateDamage(damage, reduction);
 
         _view.WriteLine($"{Defender.Name} ataca a {Attacker.Name} con {damage} de daño");
