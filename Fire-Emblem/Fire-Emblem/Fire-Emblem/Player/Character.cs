@@ -30,7 +30,7 @@ public class Character
     public Dictionary<string, int> TemporaryFollowUpBonuses { get; private set; }
     public Dictionary<string, int> TemporaryFollowUpPenalties { get; private set; }
     
-    public Dictionary<string, int> PercentageReduction { get; private set; }
+    public Dictionary<string, double> DamagePercentageReduction { get; private set; }
     
     public bool AreAtkBonusesEnabled { get; set; } = true;
     public bool AreDefBonusesEnabled { get; set; } = true;
@@ -46,7 +46,7 @@ public class Character
         Skills = new List<Skill>();
         TemporaryBonuses = new Dictionary<string, int>();
         TemporaryPenalties = new Dictionary<string, int>();
-        PercentageReduction = new Dictionary<string, int>();
+        DamagePercentageReduction = new Dictionary<string, double>();
         TemporaryFirstAttackBonuses = new Dictionary<string, int>();
         TemporaryFirstAttackPenalties = new Dictionary<string, int>();
         TemporaryFollowUpBonuses = new Dictionary<string, int>();
@@ -67,7 +67,7 @@ public class Character
             dictionary.Add(attribute, value);
     }
     
-    private void MultiplyToAttributeDictionary(Dictionary<string, int> dictionary, string attribute, int value)
+    private void MultiplyToAttributeDictionary(Dictionary<string, double> dictionary, string attribute, int value)
     {
         if (dictionary.ContainsKey(attribute))
             dictionary[attribute] *= value;
@@ -86,17 +86,7 @@ public class Character
         int baseValue = GetBaseAttributeValue(attribute);
         int totalAdjustment = GetTotalAttributeAdjustment(attribute, TemporaryBonuses, TemporaryPenalties);
         totalAdjustment += GetTotalAttributeAdjustment(attribute, TemporaryFirstAttackBonuses, TemporaryFirstAttackPenalties);
-        Console.WriteLine($"{attribute} aaa");
         int totalDamage = baseValue + totalAdjustment;
-
-        if (PercentageReduction.ContainsKey(attribute))
-        {
-            Console.WriteLine($"{attribute} bbb {PercentageReduction[attribute]}");
-            double newDamage = (double)totalDamage * (100.0 - PercentageReduction[attribute])/100.0;
-            Console.WriteLine($"newDamage {newDamage}");
-            newDamage = Math.Round(newDamage, 9);
-            totalDamage = Convert.ToInt32(Math.Floor (newDamage));
-        }
         return totalDamage;
     }
 
@@ -219,7 +209,7 @@ public class Character
 
     public void MultiplyPercentageReduction(string attribute, int value)
     {
-        MultiplyToAttributeDictionary(PercentageReduction, attribute, value);
+        MultiplyToAttributeDictionary(DamagePercentageReduction, attribute, value);
     }
     public void CleanBonuses()
     {
@@ -251,10 +241,7 @@ public class Character
 
     public void CleanPercentageReduction()
     {
-        PercentageReduction["atk"] = 0;
-        PercentageReduction["spd"] = 0;
-        PercentageReduction["def"] = 0;
-        PercentageReduction["res"] = 0;
+        DamagePercentageReduction.Clear();
     }
     
 }

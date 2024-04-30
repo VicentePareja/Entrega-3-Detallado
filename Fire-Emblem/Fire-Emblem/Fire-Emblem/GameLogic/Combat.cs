@@ -236,14 +236,14 @@ namespace Fire_Emblem
 
         private void PrintOpponentPercentageReduction(Character character)
         {
-            Character Opponent = _attacker == character ? _defender : _attacker;
+            Character opponent = _attacker == character ? _defender : _attacker;
             
-            string[] statsOrder = { "Atk", "Spd", "Def", "Res" };
+            string[] statsOrder = { "Damage" };
             
             foreach (var stat in statsOrder)
             {
-                int reduction = Opponent.PercentageReduction.ContainsKey(stat) ? Opponent.PercentageReduction[stat] : 0;
-                if (reduction != 0 && reduction != 100)
+                double reduction = character.DamagePercentageReduction.ContainsKey(stat) ? character.DamagePercentageReduction[stat] : 0.0;
+                if (reduction != 0.0)
                 {
                     _view.WriteLine($"{character.Name} reducirá el daño de los ataques del rival en un {reduction}%");
                 }
