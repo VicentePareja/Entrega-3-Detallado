@@ -5,7 +5,7 @@ namespace Fire_Emblem
     {
         public readonly Character _attacker;
         public readonly Character _defender;
-        private readonly string _advantage;
+        public readonly string _advantage;
         private readonly View _view;
         public Battle _battle;
 

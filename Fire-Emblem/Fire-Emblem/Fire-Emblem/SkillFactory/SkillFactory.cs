@@ -5,7 +5,8 @@ using Fire_Emblem.NegateBonus;
 namespace Fire_Emblem {
     public class SkillFactory : ISkillFactory {
         public Skill CreateSkill(string name, string description) {
-            switch (name) {
+            switch (name)
+            {
                 case "HP +15":
                     return new HPIncreaseSkill(name, description);
                 case "Fair Fight":
@@ -60,9 +61,9 @@ namespace Fire_Emblem {
                     return new SingleMinded(name, description);
                 case "Tome Precision":
                     return new TomePrecision(name, description);
-                case "Attack +6" :
+                case "Attack +6":
                     return new AttackPlusSix(name, description);
-                case "Speed +5" :
+                case "Speed +5":
                     return new SpeedPlusFive(name, description);
                 case "Defense +5":
                     return new DefensePlusFive(name, description);
@@ -156,7 +157,10 @@ namespace Fire_Emblem {
                     return new Gentility(name, description);
                 case "Bow Guard":
                     return new BowGuard(name, description);
-                default:
+                case "Arms Shield":
+                    return new ArmsShield(name, description);
+
+            default:
                     return new GenericSkill(name, description);
             }
         }
