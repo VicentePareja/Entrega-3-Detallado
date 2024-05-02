@@ -44,7 +44,9 @@ namespace Fire_Emblem
             PrintFollowUpPenalties(character);
             PrintBonusNegations(character);
             PrintPenaltyNegations(character);
+            PrintExtraDamage(character);
             PrintOpponentPercentageReduction(character);
+            PrintAbsoluteReduction(character);
         }
         
 
@@ -65,7 +67,7 @@ namespace Fire_Emblem
         {
             ClearTemporaryBonuses();
             ClearTemporaryPenalties();
-            CleanPercentageReduction();
+            CleanTemporaryDamageAlterations();
             PrintFinalState();
         }
 
@@ -234,22 +236,72 @@ namespace Fire_Emblem
             }
         }
 
+        private void PrintExtraDamage(Character character)
+        {
+            string stat = "ExtraDamage";
+            double extraDamage = character.GetBothAttackDamageAlteration(stat);
+            double firstAttackDamageAlteration = character.GetFirstAttackDamageAlteration(stat) - extraDamage;
+            double followUpDamageAlteration = character.GetFollowUpDamageAlteration(stat) - extraDamage;
+            if (extraDamage != 0.0)
+            {
+                _view.WriteLine($"{character.Name} realizará {extraDamage} daño extra en cada ataque");
+            }
+            else if (firstAttackDamageAlteration != 0.0)
+            {
+                _view.WriteLine(
+                    $"{character.Name} realizará {firstAttackDamageAlteration} daño extra en su primer ataque");
+            }
+            else if (followUpDamageAlteration != 0.0)
+            {
+                _view.WriteLine($"{character.Name} realizará {followUpDamageAlteration} daño extra en su Follow-Up");
+            }
+        }
+
+
         private void PrintOpponentPercentageReduction(Character character)
         {
-            Character opponent = _attacker == character ? _defender : _attacker;
-            
-            string[] statsOrder = { "Damage" };
-            
-            foreach (var stat in statsOrder)
+            string stat = "PercentageReduction";
+            double damageReduction = character.GetBothAttackDamageAlteration(stat);
+            double firstAttackDamageReduction = character.GetFirstAttackDamageAlteration(stat) - damageReduction;
+            double followUpDamageReduction = character.GetFollowUpDamageAlteration(stat) - damageReduction;
+            if (damageReduction != 0.0)
             {
-                double reduction = character.PercentageReduction.ContainsKey(stat) ? character.PercentageReduction[stat] : 0.0;
-                if (reduction != 0.0)
-                {
-                    _view.WriteLine($"{character.Name} reducirá el daño de los ataques del rival en un {reduction}%");
-                }
+                _view.WriteLine($"{character.Name} reducirá el daño de los ataques del rival en un {damageReduction}%");
+            }
+            else if (firstAttackDamageReduction != 0.0)
+            {
+                _view.WriteLine(
+                    $"{character.Name} reducirá el daño del primer ataque del rival en un {firstAttackDamageReduction}%");
+            }
+            else if (followUpDamageReduction != 0.0)
+            {
+                _view.WriteLine(
+                    $"{character.Name} reducirá el daño de los Follow-Up del rival en un {followUpDamageReduction}%");
             }
         }
         
+        private void PrintAbsoluteReduction(Character character)
+        {
+            string stat = "AbsoluteReduction";
+            double damageReduction = character.GetBothAttackDamageAlteration(stat);
+            double firstAttackDamageReduction = character.GetFirstAttackDamageAlteration(stat) - damageReduction;
+            double followUpDamageReduction = character.GetFollowUpDamageAlteration(stat) - damageReduction;
+            if (damageReduction != 0.0)
+            {
+                _view.WriteLine($"{character.Name} recibirá {damageReduction} daño en cada ataque");
+            }
+            else if (firstAttackDamageReduction != 0.0)
+            {
+                _view.WriteLine(
+                    $"{character.Name} reducirá el daño del primer ataque del rival en {firstAttackDamageReduction}");
+            }
+            else if (followUpDamageReduction != 0.0)
+            {
+                _view.WriteLine(
+                    $"{character.Name} reducirá el daño de los Follow-Up del rival en {followUpDamageReduction}");
+            }
+        }
+
         private void ClearTemporaryBonuses()
         {
             _attacker.CleanBonuses();
@@ -274,10 +326,14 @@ namespace Fire_Emblem
             _defender.ReEnablePenalties();
         }
 
-        private void CleanPercentageReduction()
+        private void CleanTemporaryDamageAlterations()
         {
-            _attacker.CleanPercentageReduction();
-            _defender.CleanPercentageReduction();
+            _attacker.CleanFirstAttackDamageAlterations();
+            _defender.CleanFirstAttackDamageAlterations();
+            _attacker.CleanTemporaryDamageAlterations();
+            _defender.CleanTemporaryDamageAlterations();
+            _attacker.CleanFollowUpDamageAlterations();
+            _defender.CleanFollowUpDamageAlterations();
         }
 
         private void PrintFinalState()

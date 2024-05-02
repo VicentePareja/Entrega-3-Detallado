@@ -152,6 +152,8 @@ namespace Fire_Emblem {
                     return new DragonWall(name, description);
                 case "Dodge":
                     return new Dodge(name, description);
+                case "Gentility":
+                    return new Gentility(name, description);
                 default:
                     return new GenericSkill(name, description);
             }

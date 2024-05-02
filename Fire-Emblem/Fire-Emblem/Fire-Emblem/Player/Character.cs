@@ -23,14 +23,13 @@ public class Character
     public List<Skill> Skills { get; private set; }
     public Dictionary<string, int> TemporaryBonuses { get; private set; }
     public Dictionary<string, int> TemporaryPenalties { get; private set; }
-    
+    public Dictionary<string, double> TemporaryDamageAlterations { get; private set; }
     public Dictionary<string, int> TemporaryFirstAttackBonuses { get; private set; }
     public Dictionary<string, int> TemporaryFirstAttackPenalties { get; private set; }
-    
+    public Dictionary<string, double> FirstAttackDamageAlterations { get; private set; }
     public Dictionary<string, int> TemporaryFollowUpBonuses { get; private set; }
     public Dictionary<string, int> TemporaryFollowUpPenalties { get; private set; }
-    
-    public Dictionary<string, double> PercentageReduction { get; private set; }
+    public Dictionary<string, double> FollowUpDamageAlterations { get; private set; }
     
     public bool AreAtkBonusesEnabled { get; set; } = true;
     public bool AreDefBonusesEnabled { get; set; } = true;
@@ -46,11 +45,13 @@ public class Character
         Skills = new List<Skill>();
         TemporaryBonuses = new Dictionary<string, int>();
         TemporaryPenalties = new Dictionary<string, int>();
-        PercentageReduction = new Dictionary<string, double>();
+        TemporaryDamageAlterations = new Dictionary<string, double>();
         TemporaryFirstAttackBonuses = new Dictionary<string, int>();
         TemporaryFirstAttackPenalties = new Dictionary<string, int>();
+        FirstAttackDamageAlterations = new Dictionary<string, double>();
         TemporaryFollowUpBonuses = new Dictionary<string, int>();
         TemporaryFollowUpPenalties = new Dictionary<string, int>();
+        FollowUpDamageAlterations = new Dictionary<string, double>();
         
     }
 
@@ -88,6 +89,26 @@ public class Character
         totalAdjustment += GetTotalAttributeAdjustment(attribute, TemporaryFirstAttackBonuses, TemporaryFirstAttackPenalties);
         int totalDamage = baseValue + totalAdjustment;
         return totalDamage;
+    }
+    
+    public double GetBothAttackDamageAlteration(string attribute)
+    {
+        double bothAttack = TemporaryDamageAlterations.ContainsKey(attribute) ? TemporaryDamageAlterations[attribute] : 0.0;
+        return bothAttack;
+    }
+    
+    public double GetFirstAttackDamageAlteration(string attribute)
+    {
+        double firstAttack = FirstAttackDamageAlterations.ContainsKey(attribute) ? FirstAttackDamageAlterations[attribute] : 0.0;
+        double bothAttack = TemporaryDamageAlterations.ContainsKey(attribute) ? TemporaryDamageAlterations[attribute] : 0.0;
+        return firstAttack + bothAttack;
+    }
+    
+    public double GetFollowUpDamageAlteration(string attribute)
+    {
+        double followUp = FollowUpDamageAlterations.ContainsKey(attribute) ? FollowUpDamageAlterations[attribute] : 0.0;
+        double bothAttack = TemporaryDamageAlterations.ContainsKey(attribute) ? TemporaryDamageAlterations[attribute] : 0.0;
+        return followUp + bothAttack;
     }
 
     public int GetFollowUpAttribute(string attribute)
@@ -206,10 +227,23 @@ public class Character
     {
         AddToAttributeDictionary(TemporaryFollowUpPenalties, attribute, value);
     }
-
-    public void MultiplyPercentageReduction(string attribute, int value)
+    
+    public void MultiplyfirstAttackDamageAlterations(string attribute, int value)
     {
-        MultiplyToAttributeDictionary(PercentageReduction, attribute, value);
+        MultiplyToAttributeDictionary(FirstAttackDamageAlterations, attribute, value);
+    }
+
+    public void MultiplyTemporaryDamageAlterations(string attribute, int value)
+    {
+        MultiplyToAttributeDictionary(TemporaryDamageAlterations, attribute, value);
+    }
+    
+    public void AddTemporaryDamageAlteration(string attribute, double value)
+    {
+        if (TemporaryDamageAlterations.ContainsKey(attribute))
+            TemporaryDamageAlterations[attribute] += value;
+        else
+            TemporaryDamageAlterations.Add(attribute, value);
     }
     public void CleanBonuses()
     {
@@ -233,15 +267,25 @@ public class Character
     {
         TemporaryFirstAttackPenalties.Clear();
     }
-
+    
     public void CleanFollowUpPenalties()
     {
         TemporaryFollowUpPenalties.Clear();
     }
-
-    public void CleanPercentageReduction()
+    
+    public void CleanFirstAttackDamageAlterations()
     {
-        PercentageReduction.Clear();
+        FirstAttackDamageAlterations.Clear();
+    }
+
+    public void CleanTemporaryDamageAlterations()
+    {
+        TemporaryDamageAlterations.Clear();
+    }
+    
+    public void CleanFollowUpDamageAlterations()
+    {
+        FollowUpDamageAlterations.Clear();
     }
     
 }

@@ -21,3 +21,4 @@ C:\Users\Vicente Pareja\Desktop\Universidad\2024\Semetre 1\Diseño detallado\Ent
 C:\Users\Vicente Pareja\Desktop\Universidad\2024\Semetre 1\Diseño detallado\Entrega 3\Entrega-3-Detallado\Fire-Emblem\Fire-Emblem\Fire-Emblem-View\obj\Debug\net8.0\refint\Fire-Emblem-View.dll
 C:\Users\Vicente Pareja\Desktop\Universidad\2024\Semetre 1\Diseño detallado\Entrega 3\Entrega-3-Detallado\Fire-Emblem\Fire-Emblem\Fire-Emblem-View\obj\Debug\net8.0\Fire-Emblem-View.pdb
 C:\Users\Vicente Pareja\Desktop\Universidad\2024\Semetre 1\Diseño detallado\Entrega 3\Entrega-3-Detallado\Fire-Emblem\Fire-Emblem\Fire-Emblem-View\obj\Debug\net8.0\ref\Fire-Emblem-View.dll
+C:\Users\Vicente Pareja\Desktop\Universidad\2024\Semetre 1\Diseño detallado\Entrega 3\Entrega-3-Detallado\Fire-Emblem\Fire-Emblem\Fire-Emblem-View\obj\Debug\net8.0\Fire-Emblem-View.sourcelink.json

@@ -14,7 +14,7 @@ namespace Fire_Emblem
             if (speedDifference > 0)
             {
                 int damageReductionPercentage = Math.Min(speedDifference * 4, 40);
-                owner.MultiplyPercentageReduction("Damage", damageReductionPercentage);
+                owner.MultiplyTemporaryDamageAlterations("PercentageReduction", damageReductionPercentage);
             }
         }
     }
