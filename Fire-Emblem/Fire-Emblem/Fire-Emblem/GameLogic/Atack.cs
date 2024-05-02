@@ -63,12 +63,11 @@ public class Attack
         int attackerAtk = Attacker.GetFollowUpAttribute("Atk");
         int defenderDef = Defender.GetFollowUpAttribute(Attacker.Weapon == "Magic" ? "Res" : "Def");
 
-        int damage = (int)((attackerAtk * weaponTriangleBonus) - defenderDef);
-        damage = Math.Max(damage, 0);
-        
-        double reduction = Defender.TemporaryDamageAlterations.ContainsKey("PercentageReduction") ?
-            Defender.TemporaryDamageAlterations["PercentageReduction"] : 0;
-        damage = CalculateDamage(damage, reduction, 0.0, 0.0);
+        int damage = Math.Max((int)((attackerAtk * weaponTriangleBonus) - defenderDef),0);
+        double reduction = Defender.GetFollowUpDamageAlteration("PercentageReduction");
+        double extraDamage = Attacker.GetFollowUpDamageAlteration("ExtraDamage");
+        double absoluteReduction = Defender.GetFollowUpDamageAlteration("AbsoluteReduction");
+        damage = CalculateDamage(damage, reduction, extraDamage, absoluteReduction);
 
         _view.WriteLine($"{Attacker.Name} ataca a {Defender.Name} con {damage} de daño");
 
@@ -82,12 +81,11 @@ public class Attack
         int defenderAtk = Defender.GetFollowUpAttribute("Atk");
         int attackerDef = Attacker.GetFollowUpAttribute(Defender.Weapon == "Magic" ? "Res" : "Def");
 
-        int damage = (int)((defenderAtk * weaponTriangleBonus) - attackerDef);
-        damage = Math.Max(damage, 0);
-        
-        double reduction = Attacker.TemporaryDamageAlterations.ContainsKey("PercentageReduction") ?
-            Attacker.TemporaryDamageAlterations["PercentageReduction"] : 0;
-        damage = CalculateDamage(damage, reduction, 0.0, 0.0);
+        int damage = Math.Max((int)((defenderAtk * weaponTriangleBonus) - attackerDef),0);
+        double reduction = Attacker.GetFollowUpDamageAlteration("PercentageReduction");
+        double extraDamage = Defender.GetFollowUpDamageAlteration("ExtraDamage");
+        double absoluteReduction = Attacker.GetFollowUpDamageAlteration("AbsoluteReduction");
+        damage = CalculateDamage(damage, reduction, extraDamage, absoluteReduction);
 
         _view.WriteLine($"{Defender.Name} ataca a {Attacker.Name} con {damage} de daño");
 

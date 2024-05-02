@@ -11,7 +11,7 @@ namespace Fire_Emblem
             bool isOpponentPhysical = opponent.Weapon != "Magic";
             if (isOpponentPhysical) 
             {
-                owner.MultiplyfirstAttackDamageAlterations("PercentageReduction", 50);
+                owner.MultiplyFirstAttackDamageAlterations("PercentageReduction", 50);
             }
         }
     }

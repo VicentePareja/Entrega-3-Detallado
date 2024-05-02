@@ -228,7 +228,7 @@ public class Character
         AddToAttributeDictionary(TemporaryFollowUpPenalties, attribute, value);
     }
     
-    public void MultiplyfirstAttackDamageAlterations(string attribute, int value)
+    public void MultiplyFirstAttackDamageAlterations(string attribute, int value)
     {
         MultiplyToAttributeDictionary(FirstAttackDamageAlterations, attribute, value);
     }
