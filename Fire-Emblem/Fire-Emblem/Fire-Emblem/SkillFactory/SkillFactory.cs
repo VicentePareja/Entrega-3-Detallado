@@ -159,6 +159,14 @@ namespace Fire_Emblem {
                     return new BowGuard(name, description);
                 case "Arms Shield":
                     return new ArmsShield(name, description);
+                case "Axe Guard":
+                    return new AxeGuard(name, description);
+                case "Magic Guard":
+                    return new MagicGuard(name, description);
+                case "Lance Guard":
+                    return new LanceGuard(name, description);
+                 case "Sympathetic":
+                    return new Sympathetic(name, description);
 
             default:
                     return new GenericSkill(name, description);
