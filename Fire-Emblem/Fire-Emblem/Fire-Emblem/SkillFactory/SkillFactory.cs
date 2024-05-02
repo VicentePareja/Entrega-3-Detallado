@@ -154,6 +154,8 @@ namespace Fire_Emblem {
                     return new Dodge(name, description);
                 case "Gentility":
                     return new Gentility(name, description);
+                case "Bow Guard":
+                    return new BowGuard(name, description);
                 default:
                     return new GenericSkill(name, description);
             }

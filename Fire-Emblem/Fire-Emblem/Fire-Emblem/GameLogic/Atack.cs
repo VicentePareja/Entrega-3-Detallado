@@ -29,8 +29,7 @@ public class Attack
         int defenderDef = Defender.GetFirstAttackAttribute(Attacker.Weapon == "Magic" ? "Res" : "Def");
         
         int damage = Math.Max((int)((attackerAtk * weaponTriangleBonus) - defenderDef),0);
-        double reduction = Defender.TemporaryDamageAlterations.ContainsKey("PercentageReduction") ?
-            Defender.TemporaryDamageAlterations["PercentageReduction"] : 0;
+        double reduction = Defender.GetFirstAttackDamageAlteration("PercentageReduction");
         double extraDamage = Attacker.GetFirstAttackDamageAlteration("ExtraDamage");
         double absoluteReduction = Defender.GetFirstAttackDamageAlteration("AbsoluteReduction");
         
@@ -46,11 +45,11 @@ public class Attack
         int defenderAtk = Defender.GetFirstAttackAttribute("Atk");
         int attackerDef = Attacker.GetFirstAttackAttribute(Defender.Weapon == "Magic" ? "Res" : "Def");
 
-        int damage = (int)((defenderAtk * weaponTriangleBonus) - attackerDef);
-        damage = Math.Max(damage, 0);
-        
-        double reduction = Attacker.TemporaryDamageAlterations.ContainsKey("PercentageReduction") ? Attacker.TemporaryDamageAlterations["PercentageReduction"] : 0;
-        damage = CalculateDamage(damage, reduction, 0.0, 0.0);
+        int damage = Math.Max((int)((defenderAtk * weaponTriangleBonus) - attackerDef),0);
+        double reduction = Attacker.GetFirstAttackDamageAlteration("PercentageReduction");
+        double extraDamage = Defender.GetFirstAttackDamageAlteration("ExtraDamage");
+        double absoluteReduction = Attacker.GetFirstAttackDamageAlteration("AbsoluteReduction");
+        damage = CalculateDamage(damage, reduction, extraDamage, absoluteReduction);
 
         _view.WriteLine($"{Defender.Name} ataca a {Attacker.Name} con {damage} de daño");
 
