@@ -238,6 +238,11 @@ public class Character
         MultiplyToAttributeDictionary(TemporaryDamageAlterations, attribute, value);
     }
     
+    public void MultiplyFollowUpDamageAlterations(string attribute, int value)
+    {
+        MultiplyToAttributeDictionary(FollowUpDamageAlterations, attribute, value);
+    }
+    
     public void AddTemporaryDamageAlteration(string attribute, double value)
     {
         if (TemporaryDamageAlterations.ContainsKey(attribute))

@@ -183,6 +183,12 @@ namespace Fire_Emblem {
                     return new AegisShield(name, description);
                 case "Remote Sparrow":
                     return new RemoteSparrow(name, description);
+                case "Remote Mirror":
+                    return new RemoteMirror(name, description);
+                case "Remote Sturdy":
+                    return new RemoteSturdy(name, description);
+                case "Fierce Stance":
+                    return new FierceStance(name, description);
 
             default:
                     return new GenericSkill(name, description);

@@ -276,7 +276,7 @@ namespace Fire_Emblem
             else if (followUpDamageReduction != 0.0)
             {
                 _view.WriteLine(
-                    $"{character.Name} reducirá el daño de los Follow-Up del rival en un {followUpDamageReduction}%");
+                    $"{character.Name} reducirá el daño del Follow-Up del rival en un {followUpDamageReduction}%");
             }
         }
         
