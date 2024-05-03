@@ -175,6 +175,10 @@ namespace Fire_Emblem {
                     return new Bravery(name, description);
                 case "Bushido":
                     return new Bushido(name, description);
+                case "Moon-Twin Wing":
+                    return new MoonTwinWing(name, description);
+                case "Blue Skies":
+                    return new BlueSkies(name, description);
 
             default:
                     return new GenericSkill(name, description);
