@@ -173,6 +173,8 @@ namespace Fire_Emblem {
                     return new LunarBrace(name, description);
                 case "Bravery":
                     return new Bravery(name, description);
+                case "Bushido":
+                    return new Bushido(name, description);
 
             default:
                     return new GenericSkill(name, description);
