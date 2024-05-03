@@ -189,6 +189,8 @@ namespace Fire_Emblem {
                     return new RemoteSturdy(name, description);
                 case "Fierce Stance":
                     return new FierceStance(name, description);
+                case "Darting Stance":
+                    return new DartingStance(name, description);
 
             default:
                     return new GenericSkill(name, description);
