@@ -191,6 +191,8 @@ namespace Fire_Emblem {
                     return new FierceStance(name, description);
                 case "Darting Stance":
                     return new DartingStance(name, description);
+                case "Steady Stance":
+                    return new SteadyStance(name, description);
 
             default:
                     return new GenericSkill(name, description);
