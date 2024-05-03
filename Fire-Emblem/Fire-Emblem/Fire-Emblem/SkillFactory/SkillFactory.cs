@@ -165,8 +165,14 @@ namespace Fire_Emblem {
                     return new MagicGuard(name, description);
                 case "Lance Guard":
                     return new LanceGuard(name, description);
-                 case "Sympathetic":
+                case "Sympathetic":
                     return new Sympathetic(name, description);
+                case "Back at You":
+                    return new BackAtYou(name, description);
+                case "Lunar Brace":
+                    return new LunarBrace(name, description);
+                case "Bravery":
+                    return new Bravery(name, description);
 
             default:
                     return new GenericSkill(name, description);

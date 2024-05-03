@@ -242,9 +242,9 @@ namespace Fire_Emblem
             double extraDamage = character.GetBothAttackDamageAlteration(stat);
             double firstAttackDamageAlteration = character.GetFirstAttackDamageAlteration(stat) - extraDamage;
             double followUpDamageAlteration = character.GetFollowUpDamageAlteration(stat) - extraDamage;
-            if (extraDamage != 0.0)
+            if (extraDamage >= 1.0)
             {
-                _view.WriteLine($"{character.Name} realizará {extraDamage} daño extra en cada ataque");
+                _view.WriteLine($"{character.Name} realizará +{(int)extraDamage} daño extra en cada ataque");
             }
             else if (firstAttackDamageAlteration != 0.0)
             {

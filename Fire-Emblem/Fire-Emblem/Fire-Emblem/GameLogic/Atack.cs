@@ -16,8 +16,9 @@ public class Attack
     
     private int CalculateDamage(int baseDamage, double reduction, double extraDamage, double absoluteReduction)
     {   
-        baseDamage += Convert.ToInt32(extraDamage);
-        double damageReduced = baseDamage * (100.0 - reduction) / 100.0;
+        double initialDamage = (double)baseDamage;
+        double newDamage = initialDamage + extraDamage;
+        double damageReduced = newDamage * (100.0 - reduction) / 100.0;
         damageReduced = Math.Round(damageReduced, 9);
         return Math.Max(Convert.ToInt32(Math.Floor(damageReduced)) + Convert.ToInt32(absoluteReduction),0);
     }
