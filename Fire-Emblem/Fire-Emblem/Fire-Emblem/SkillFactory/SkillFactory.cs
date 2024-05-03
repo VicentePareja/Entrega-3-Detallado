@@ -181,6 +181,8 @@ namespace Fire_Emblem {
                     return new BlueSkies(name, description);
                 case "Aegis Shield":
                     return new AegisShield(name, description);
+                case "Remote Sparrow":
+                    return new RemoteSparrow(name, description);
 
             default:
                     return new GenericSkill(name, description);
