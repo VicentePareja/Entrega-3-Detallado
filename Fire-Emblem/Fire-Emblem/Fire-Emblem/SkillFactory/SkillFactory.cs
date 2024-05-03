@@ -179,6 +179,8 @@ namespace Fire_Emblem {
                     return new MoonTwinWing(name, description);
                 case "Blue Skies":
                     return new BlueSkies(name, description);
+                case "Aegis Shield":
+                    return new AegisShield(name, description);
 
             default:
                     return new GenericSkill(name, description);
