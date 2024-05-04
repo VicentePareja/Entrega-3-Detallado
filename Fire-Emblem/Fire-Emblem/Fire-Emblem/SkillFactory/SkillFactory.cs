@@ -151,6 +151,8 @@ namespace Fire_Emblem {
                     return new Sandstorm(name, description);
                 case "Dragon Wall":
                     return new DragonWall(name, description);
+                case "Golden Lotus":
+                    return new GoldenLotus(name, description);
                 case "Dodge":
                     return new Dodge(name, description);
                 case "Gentility":
