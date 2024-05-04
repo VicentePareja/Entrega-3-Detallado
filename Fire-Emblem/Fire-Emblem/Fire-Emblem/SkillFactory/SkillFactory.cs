@@ -217,6 +217,8 @@ namespace Fire_Emblem {
                     return new DragonsWrath(name, description);
                 case "Prescience":
                     return new Prescience(name, description);
+                case "Extra Chivalry":
+                    return new ExtraChivalry(name, description);
 
             default:
                     return new GenericSkill(name, description);
