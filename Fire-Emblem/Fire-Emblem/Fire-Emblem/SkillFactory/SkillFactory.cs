@@ -219,6 +219,10 @@ namespace Fire_Emblem {
                     return new Prescience(name, description);
                 case "Extra Chivalry":
                     return new ExtraChivalry(name, description);
+                case "Guard Bearing":
+                    return new GuardBearing(name, description);
+                case "Divine Recreation":
+                    return new DivineRecreation(name, description);
 
             default:
                     return new GenericSkill(name, description);

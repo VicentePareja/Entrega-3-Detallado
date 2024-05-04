@@ -239,7 +239,7 @@ namespace Fire_Emblem
         private void PrintExtraDamage(Character character)
         {
             string stat = "ExtraDamage";
-            double extraDamage = character.GetBothAttackDamageAlteration(stat);
+            double extraDamage = character.GetTemporaryDamageAlteration(stat);
             double firstAttackDamageAlteration = character.GetFirstAttackDamageAlteration(stat) - extraDamage;
             double followUpDamageAlteration = character.GetFollowUpDamageAlteration(stat) - extraDamage;
             if (extraDamage >= 1.0)
@@ -261,11 +261,12 @@ namespace Fire_Emblem
         private void PrintOpponentPercentageReduction(Character character)
         {
             string stat = "PercentageReduction";
-            double damageReduction = character.GetBothAttackDamageAlteration(stat);
+            double damageReduction = character.GetTemporaryDamageAlteration(stat);
             double firstAttackDamageReduction = character.GetFirstAttackDamageAlteration(stat) - damageReduction;
             double followUpDamageReduction = character.GetFollowUpDamageAlteration(stat) - damageReduction;
             if (damageReduction != 0.0)
             {
+                Console.WriteLine($"AAAAAAAAAA {damageReduction}");
                 _view.WriteLine($"{character.Name} reducirá el daño de los ataques del rival en un {damageReduction}%");
             }
             else if (firstAttackDamageReduction != 0.0)
@@ -283,7 +284,7 @@ namespace Fire_Emblem
         private void PrintAbsoluteReduction(Character character)
         {
             string stat = "AbsoluteReduction";
-            double damageReduction = character.GetBothAttackDamageAlteration(stat);
+            double damageReduction = character.GetTemporaryDamageAlteration(stat);
             double firstAttackDamageReduction = character.GetFirstAttackDamageAlteration(stat) - damageReduction;
             double followUpDamageReduction = character.GetFollowUpDamageAlteration(stat) - damageReduction;
             if (damageReduction != 0.0)

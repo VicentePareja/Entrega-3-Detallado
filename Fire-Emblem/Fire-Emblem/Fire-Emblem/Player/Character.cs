@@ -91,7 +91,7 @@ public class Character
         return totalDamage;
     }
     
-    public double GetBothAttackDamageAlteration(string attribute)
+    public double GetTemporaryDamageAlteration(string attribute)
     {
         double bothAttack = TemporaryDamageAlterations.ContainsKey(attribute) ? TemporaryDamageAlterations[attribute] : 0.0;
         return bothAttack;
