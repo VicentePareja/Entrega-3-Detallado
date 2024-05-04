@@ -211,6 +211,12 @@ namespace Fire_Emblem {
                     return new PoeticJustice(name, description);
                 case "Laguz Friend":
                     return new LaguzFriend(name, description);
+                case "Chivalry":
+                    return new Chivalry(name, description);
+                case "Dragon's Wrath":
+                    return new DragonsWrath(name, description);
+                case "Prescience":
+                    return new Prescience(name, description);
 
             default:
                     return new GenericSkill(name, description);

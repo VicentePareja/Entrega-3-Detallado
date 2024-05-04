@@ -249,11 +249,11 @@ namespace Fire_Emblem
             else if (firstAttackDamageAlteration != 0.0)
             {
                 _view.WriteLine(
-                    $"{character.Name} realizará {firstAttackDamageAlteration} daño extra en su primer ataque");
+                    $"{character.Name} realizará +{(int)firstAttackDamageAlteration} daño extra en su primer ataque");
             }
             else if (followUpDamageAlteration != 0.0)
             {
-                _view.WriteLine($"{character.Name} realizará {followUpDamageAlteration} daño extra en su Follow-Up");
+                _view.WriteLine($"{character.Name} realizará +{(int)followUpDamageAlteration} daño extra en su Follow-Up");
             }
         }
 

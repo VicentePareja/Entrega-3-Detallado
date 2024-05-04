@@ -217,7 +217,7 @@ public class Character
     {
         AddToAttributeDictionary(TemporaryFirstAttackPenalties, attribute, value);
     }
-
+    
     public void AddTemporaryFollowUpBonuses(string attribute, int value)
     {
         AddToAttributeDictionary(TemporaryFollowUpBonuses, attribute, value);
@@ -250,6 +250,23 @@ public class Character
         else
             TemporaryDamageAlterations.Add(attribute, value);
     }
+    
+    public void AddFirstAttackDamageAlteration(string attribute, double value)
+    {
+        if (FirstAttackDamageAlterations.ContainsKey(attribute))
+            FirstAttackDamageAlterations[attribute] += value;
+        else
+            FirstAttackDamageAlterations.Add(attribute, value);
+    }
+    
+    public void AddFollowUpDamageAlteration(string attribute, double value)
+    {
+        if (FollowUpDamageAlterations.ContainsKey(attribute))
+            FollowUpDamageAlterations[attribute] += value;
+        else
+            FollowUpDamageAlterations.Add(attribute, value);
+    }
+    
     public void CleanBonuses()
     {
         TemporaryBonuses.Clear();
