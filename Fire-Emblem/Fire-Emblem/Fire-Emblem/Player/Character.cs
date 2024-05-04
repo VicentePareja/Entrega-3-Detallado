@@ -119,7 +119,7 @@ public class Character
         return baseValue + totalAdjustment;
     }
 
-    private int GetBaseAttributeValue(string attribute)
+    public int GetBaseAttributeValue(string attribute)
     {
         return attribute switch {
             "Atk" => Atk,

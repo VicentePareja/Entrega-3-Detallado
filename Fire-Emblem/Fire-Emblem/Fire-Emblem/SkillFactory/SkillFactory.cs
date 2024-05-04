@@ -205,6 +205,12 @@ namespace Fire_Emblem {
                     return new SwiftStance(name, description);
                 case "Bracing Stance":
                     return new BracingStance(name, description);
+                case "Steady Posture":
+                    return new SteadyPosture(name, description);
+                case "Poetic Justice":
+                    return new PoeticJustice(name, description);
+                case "Laguz Friend":
+                    return new LaguzFriend(name, description);
 
             default:
                     return new GenericSkill(name, description);
