@@ -13,7 +13,7 @@ public class BackAtYou : Skill
         if (isInitiatorOpponent)
         {
             double lostHP = owner.MaxHP - owner.CurrentHP;
-            double extraDamage = lostHP / 2;
+            double extraDamage = Math.Round(lostHP * 0.5, 9);
             owner.AddTemporaryDamageAlteration("ExtraDamage", extraDamage);
         }
     }

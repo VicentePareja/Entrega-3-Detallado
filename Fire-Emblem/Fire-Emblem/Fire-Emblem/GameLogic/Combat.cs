@@ -246,12 +246,12 @@ namespace Fire_Emblem
             {
                 _view.WriteLine($"{character.Name} realizará +{(int)extraDamage} daño extra en cada ataque");
             }
-            else if (firstAttackDamageAlteration != 0.0)
+            if (firstAttackDamageAlteration != 0.0)
             {
                 _view.WriteLine(
                     $"{character.Name} realizará +{(int)firstAttackDamageAlteration} daño extra en su primer ataque");
             }
-            else if (followUpDamageAlteration != 0.0)
+            if (followUpDamageAlteration != 0.0)
             {
                 _view.WriteLine($"{character.Name} realizará +{(int)followUpDamageAlteration} daño extra en su Follow-Up");
             }
@@ -264,20 +264,19 @@ namespace Fire_Emblem
             double damageReduction = character.GetTemporaryDamageAlteration(stat);
             double firstAttackDamageReduction = character.GetFirstAttackDamageAlteration(stat) - damageReduction;
             double followUpDamageReduction = character.GetFollowUpDamageAlteration(stat) - damageReduction;
+            
             if (damageReduction != 0.0)
             {
-                Console.WriteLine($"AAAAAAAAAA {damageReduction}");
                 _view.WriteLine($"{character.Name} reducirá el daño de los ataques del rival en un {damageReduction}%");
             }
-            else if (firstAttackDamageReduction != 0.0)
+            if (firstAttackDamageReduction != 0.0)
             {
                 _view.WriteLine(
                     $"{character.Name} reducirá el daño del primer ataque del rival en un {firstAttackDamageReduction}%");
             }
-            else if (followUpDamageReduction != 0.0)
+            if (followUpDamageReduction != 0.0)
             {
-                _view.WriteLine(
-                    $"{character.Name} reducirá el daño del Follow-Up del rival en un {followUpDamageReduction}%");
+                _view.WriteLine($"{character.Name} reducirá el daño del Follow-Up del rival en un {followUpDamageReduction}%");
             }
         }
         
@@ -291,12 +290,12 @@ namespace Fire_Emblem
             {
                 _view.WriteLine($"{character.Name} recibirá {damageReduction} daño en cada ataque");
             }
-            else if (firstAttackDamageReduction != 0.0)
+            if (firstAttackDamageReduction != 0.0)
             {
                 _view.WriteLine(
                     $"{character.Name} reducirá el daño del primer ataque del rival en {firstAttackDamageReduction}");
             }
-            else if (followUpDamageReduction != 0.0)
+            if (followUpDamageReduction != 0.0)
             {
                 _view.WriteLine(
                     $"{character.Name} reducirá el daño de los Follow-Up del rival en {followUpDamageReduction}");

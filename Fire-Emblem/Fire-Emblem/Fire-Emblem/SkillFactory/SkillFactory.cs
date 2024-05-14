@@ -225,7 +225,6 @@ namespace Fire_Emblem {
                     return new GuardBearing(name, description);
                 case "Divine Recreation":
                     return new DivineRecreation(name, description);
-
             default:
                     return new GenericSkill(name, description);
             }
