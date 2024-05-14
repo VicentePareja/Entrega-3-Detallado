@@ -1,6 +1,6 @@
 namespace Fire_Emblem;
 
-public class SteadyStance : Skill
+public class SteadyStance : DamageAlterationSkill
 {
     public SteadyStance(string name, string description) : base(name, description)
     {

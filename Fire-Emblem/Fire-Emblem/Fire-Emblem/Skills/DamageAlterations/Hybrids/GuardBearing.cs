@@ -1,5 +1,5 @@
 namespace Fire_Emblem {
-    public class GuardBearing : Skill {
+    public class GuardBearing : DamageAlterationSkill {
         public GuardBearing(string name, string description) : base(name, description) {
         }
 

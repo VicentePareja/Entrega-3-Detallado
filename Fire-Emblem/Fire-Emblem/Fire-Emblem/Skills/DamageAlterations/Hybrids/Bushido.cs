@@ -1,6 +1,6 @@
 namespace Fire_Emblem;
 
-public class Bushido : Skill
+public class Bushido : DamageAlterationSkill
 {
     public Bushido(string name, string description) : base(name, description)
     {

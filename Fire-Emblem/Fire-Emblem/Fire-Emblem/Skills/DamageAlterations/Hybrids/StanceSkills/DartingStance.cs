@@ -1,6 +1,6 @@
 namespace Fire_Emblem;
 
-public class DartingStance : Skill
+public class DartingStance : DamageAlterationSkill
 {
     public DartingStance(string name, string description) : base(name, description)
     {

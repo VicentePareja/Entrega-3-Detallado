@@ -1,6 +1,6 @@
 namespace Fire_Emblem;
 
-public class BracingStance : Skill
+public class BracingStance : DamageAlterationSkill
 {
     public BracingStance(string name, string description) : base(name, description)
     {

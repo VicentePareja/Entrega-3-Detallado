@@ -1,6 +1,6 @@
 namespace Fire_Emblem;
 
-public class Bravery : Skill
+public class Bravery : DamageAlterationSkill
 {
     public Bravery(string name, string description) : base(name, description)
     {

@@ -1,6 +1,6 @@
 namespace Fire_Emblem;
 
-public class MirrorStance : Skill
+public class MirrorStance : DamageAlterationSkill
 {
     public MirrorStance(string name, string description) : base(name, description)
     {

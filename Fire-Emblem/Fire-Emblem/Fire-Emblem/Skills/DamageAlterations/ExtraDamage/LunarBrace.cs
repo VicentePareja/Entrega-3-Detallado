@@ -1,6 +1,6 @@
 namespace Fire_Emblem;
 
-public class LunarBrace : Skill
+public class LunarBrace : DamageAlterationSkill
 {
     public LunarBrace(string name, string description) : base(name, description) {}
 

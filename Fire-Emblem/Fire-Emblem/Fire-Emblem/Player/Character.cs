@@ -30,6 +30,7 @@ public class Character
     public Dictionary<string, int> TemporaryFollowUpBonuses { get; private set; }
     public Dictionary<string, int> TemporaryFollowUpPenalties { get; private set; }
     public Dictionary<string, double> FollowUpDamageAlterations { get; private set; }
+    public Dictionary<string, double> DamageReduced { get; private set; }
     
     public bool AreAtkBonusesEnabled { get; set; } = true;
     public bool AreDefBonusesEnabled { get; set; } = true;

@@ -1,6 +1,6 @@
 namespace Fire_Emblem 
 {
-    public class Gentility : Skill 
+    public class Gentility : DamageAlterationSkill 
     {
         public Gentility(string name, string description) : base(name, description) {}
 

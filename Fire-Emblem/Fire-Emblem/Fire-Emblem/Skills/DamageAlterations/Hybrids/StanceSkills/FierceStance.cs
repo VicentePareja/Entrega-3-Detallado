@@ -1,6 +1,6 @@
 namespace Fire_Emblem;
 
-public class FierceStance : Skill
+public class FierceStance : DamageAlterationSkill
 {
     public FierceStance(string name, string description) : base(name, description)
     {

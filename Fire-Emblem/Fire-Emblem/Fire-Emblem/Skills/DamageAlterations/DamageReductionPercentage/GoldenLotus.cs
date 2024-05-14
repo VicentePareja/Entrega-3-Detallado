@@ -1,6 +1,6 @@
 namespace Fire_Emblem 
 {
-    public class GoldenLotus : Skill 
+    public class GoldenLotus : DamageAlterationSkill 
     {
         public GoldenLotus(string name, string description) : base(name, description) {}
 

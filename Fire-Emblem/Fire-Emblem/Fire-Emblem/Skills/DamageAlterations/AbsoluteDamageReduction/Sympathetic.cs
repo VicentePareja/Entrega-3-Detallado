@@ -1,6 +1,6 @@
 namespace Fire_Emblem;
 
-public class Sympathetic : Skill
+public class Sympathetic : DamageAlterationSkill
 {
     public Sympathetic(string name, string description) : base(name, description)
     {

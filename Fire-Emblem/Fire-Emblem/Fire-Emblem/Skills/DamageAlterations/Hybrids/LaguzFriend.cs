@@ -1,5 +1,5 @@
 namespace Fire_Emblem {
-    public class LaguzFriend : Skill {
+    public class LaguzFriend : DamageAlterationSkill {
         public LaguzFriend(string name, string description) : base(name, description) {
         }
 

@@ -1,6 +1,6 @@
 namespace Fire_Emblem 
 {
-    public class DragonWall : Skill 
+    public class DragonWall : DamageAlterationSkill 
     {
         public DragonWall(string name, string description) : base(name, description) {}
 

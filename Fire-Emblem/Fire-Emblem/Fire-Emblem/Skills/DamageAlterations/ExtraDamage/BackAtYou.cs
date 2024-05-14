@@ -1,6 +1,6 @@
 namespace Fire_Emblem;
 
-public class BackAtYou : Skill
+public class BackAtYou : DamageAlterationSkill
 {
     public BackAtYou(string name, string description) : base(name, description)
     {

@@ -1,6 +1,6 @@
 namespace Fire_Emblem;
 
-public class AegisShield : Skill
+public class AegisShield : DamageAlterationSkill
 {
     public AegisShield(string name, string description) : base(name, description)
     {

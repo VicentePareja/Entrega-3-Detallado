@@ -1,5 +1,5 @@
 namespace Fire_Emblem {
-    public class Chivalry : Skill {
+    public class Chivalry : DamageAlterationSkill {
         public Chivalry(string name, string description) : base(name, description) {
         }
 

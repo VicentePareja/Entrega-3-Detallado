@@ -1,5 +1,5 @@
 namespace Fire_Emblem {
-    public class DragonsWrath : Skill {
+    public class DragonsWrath : DamageAlterationSkill {
         public DragonsWrath(string name, string description) : base(name, description) {
         }
 

@@ -1,6 +1,6 @@
 namespace Fire_Emblem;
 
-public class BlueSkies : Skill
+public class BlueSkies : DamageAlterationSkill
 {
     public BlueSkies(string name, string description) : base(name, description)
     {

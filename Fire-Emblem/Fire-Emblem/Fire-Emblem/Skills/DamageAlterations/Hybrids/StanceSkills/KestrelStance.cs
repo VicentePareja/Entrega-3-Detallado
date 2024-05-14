@@ -1,6 +1,6 @@
 namespace Fire_Emblem;
 
-public class KestrelStance : Skill
+public class KestrelStance : DamageAlterationSkill
 {
     public KestrelStance(string name, string description) : base(name, description)
     {

@@ -1,5 +1,5 @@
 namespace Fire_Emblem;
-public class SturdyStance : Skill
+public class SturdyStance : DamageAlterationSkill
 {
     public SturdyStance(string name, string description) : base(name, description)
     {

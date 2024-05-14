@@ -1,6 +1,6 @@
 namespace Fire_Emblem;
 
-public class MagicGuard : Skill
+public class MagicGuard : DamageAlterationSkill
 {
     public MagicGuard(string name, string description) : base(name, description)
     {

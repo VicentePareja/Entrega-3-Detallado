@@ -1,5 +1,5 @@
 namespace Fire_Emblem;
-public class ArmsShield : Skill
+public class ArmsShield : DamageAlterationSkill
 {
     public ArmsShield(string name, string description) : base(name, description)
     {

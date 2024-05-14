@@ -1,6 +1,6 @@
 namespace Fire_Emblem;
 
-public class RemoteMirror : Skill
+public class RemoteMirror : DamageAlterationSkill
 {
     public RemoteMirror(string name, string description) : base(name, description)
     {

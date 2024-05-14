@@ -72,11 +72,50 @@ namespace Fire_Emblem
         }
 
         private void ApplySkills() {
+            
+            ApplyAttackerSkills();
+            ApplyDefenderSkills();
+            ApplyAttackerDamageAlterationSkills();
+            ApplyDefenderDamageAlterationSkills();
+        }
+
+        private void ApplyAttackerSkills()
+        {
             foreach (var skill in _attacker.Skills) {
-                skill.ApplyEffect(_battle, _attacker);
+                if (!skill.IsDamageAlteration)
+                {
+                    skill.ApplyEffect(_battle, _attacker);
+                }
             }
+        }
+        
+        private void ApplyDefenderSkills()
+        {
             foreach (var skill in _defender.Skills) {
-                skill.ApplyEffect(_battle, _defender);
+                if (!skill.IsDamageAlteration)
+                {
+                    skill.ApplyEffect(_battle, _defender);
+                }
+            }
+        }
+        
+        private void ApplyAttackerDamageAlterationSkills()
+        {
+            foreach (var skill in _attacker.Skills) {
+                if (skill.IsDamageAlteration)
+                {
+                    skill.ApplyEffect(_battle, _attacker);
+                }
+            }
+        }
+        
+        private void ApplyDefenderDamageAlterationSkills()
+        {
+            foreach (var skill in _defender.Skills) {
+                if (skill.IsDamageAlteration)
+                {
+                    skill.ApplyEffect(_battle, _defender);
+                }
             }
         }
 

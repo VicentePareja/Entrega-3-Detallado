@@ -1,6 +1,6 @@
 namespace Fire_Emblem;
 
-public class RemoteSturdy : Skill
+public class RemoteSturdy : DamageAlterationSkill
 {
     public RemoteSturdy(string name, string description) : base(name, description)
     {

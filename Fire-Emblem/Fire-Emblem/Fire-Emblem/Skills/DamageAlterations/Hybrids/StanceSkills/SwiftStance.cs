@@ -1,6 +1,6 @@
 namespace Fire_Emblem;
 
-public class SwiftStance : Skill
+public class SwiftStance : DamageAlterationSkill
 {
     public SwiftStance(string name, string description) : base(name, description)
     {

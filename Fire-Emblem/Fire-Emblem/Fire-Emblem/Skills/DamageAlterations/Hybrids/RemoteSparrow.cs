@@ -1,6 +1,6 @@
 namespace Fire_Emblem;
 
-public class RemoteSparrow : Skill
+public class RemoteSparrow : DamageAlterationSkill
 {
     public RemoteSparrow(string name, string description) : base(name, description)
     {

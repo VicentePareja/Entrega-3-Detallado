@@ -2,7 +2,7 @@ using System;
 
 namespace Fire_Emblem
 {
-    public class Dodge : Skill
+    public class Dodge : DamageAlterationSkill
     {
         public Dodge(string name, string description) : base(name, description) {}
 

@@ -1,5 +1,5 @@
 namespace Fire_Emblem {
-    public class Prescience : Skill {
+    public class Prescience : DamageAlterationSkill {
         public Prescience(string name, string description) : base(name, description) {
         }
 

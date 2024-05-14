@@ -1,6 +1,6 @@
 namespace Fire_Emblem;
 
-public class BowGuard: Skill
+public class BowGuard: DamageAlterationSkill
 {
     public BowGuard(string name, string description) : base(name, description)
     {

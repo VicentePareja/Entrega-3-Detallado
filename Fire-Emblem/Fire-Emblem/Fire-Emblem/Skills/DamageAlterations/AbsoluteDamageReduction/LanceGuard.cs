@@ -1,6 +1,6 @@
 namespace Fire_Emblem;
 
-public class LanceGuard : Skill
+public class LanceGuard : DamageAlterationSkill
 {
     public LanceGuard(string name, string description) : base(name, description)
     {

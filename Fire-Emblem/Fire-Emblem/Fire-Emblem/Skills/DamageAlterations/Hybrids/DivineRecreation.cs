@@ -1,5 +1,5 @@
 namespace Fire_Emblem {
-    public class DivineRecreation : Skill
+    public class DivineRecreation : DamageAlterationSkill
     {
         public DivineRecreation(string name, string description) : base(name, description)
         {

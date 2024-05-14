@@ -1,6 +1,6 @@
 namespace Fire_Emblem;
 
-public class PoeticJustice : Skill
+public class PoeticJustice : DamageAlterationSkill
 {
     public PoeticJustice(string name, string description) : base(name, description)
     {
