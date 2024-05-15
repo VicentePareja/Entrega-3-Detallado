@@ -59,7 +59,7 @@ public class Attack
         int attackerDef = Attacker.GetFollowUpAttribute(Defender.Weapon == "Magic" ? "Res" : "Def");
 
         int damage = CalculateBaseDamageForDefense(defenderAtk, attackerDef, weaponTriangleBonus);
-        damage = ApplyDamageAlterationsForFollowUpDefense(damage);
+        damage = ApplyDamageAlterationsForDefense(damage);
         _view.WriteLine($"{Defender.Name} ataca a {Attacker.Name} con {damage} de daño");
 
         Attacker.CurrentHP -= damage;
@@ -109,25 +109,6 @@ public class Attack
         double reduction = Defender.GetFirstAttackDamageAlteration("PercentageReduction");
         double extraDamage = Attacker.GetFirstAttackDamageAlteration("ExtraDamage");
         double absoluteReduction = Defender.GetFirstAttackDamageAlteration("AbsoluteReduction");
-        
-        Attacker.DamageStatsFirstAttack["damage"] = damage;
-        Attacker.DamageStatsFirstAttack["reduction"] = reduction;
-        Attacker.DamageStatsFirstAttack["extraDamage"] = extraDamage;
-        Attacker.DamageStatsFirstAttack["absoluteReduction"] = absoluteReduction;
-        
-        return CalculateDamage(damage, reduction, extraDamage, absoluteReduction);
-    }
-    
-    private int ApplyDamageAlterationsForCounter(int damage)
-    {
-        double reduction = Attacker.GetFirstAttackDamageAlteration("PercentageReduction");
-        double extraDamage = Defender.GetFirstAttackDamageAlteration("ExtraDamage");
-        double absoluteReduction = Attacker.GetFirstAttackDamageAlteration("AbsoluteReduction");
-        
-        Defender.DamageStatsFirstAttack["damage"] = damage;
-        Defender.DamageStatsFirstAttack["reduction"] = reduction;
-        Defender.DamageStatsFirstAttack["extraDamage"] = extraDamage;
-        Defender.DamageStatsFirstAttack["absoluteReduction"] = absoluteReduction;
 
         return CalculateDamage(damage, reduction, extraDamage, absoluteReduction);
     }
@@ -137,25 +118,24 @@ public class Attack
         double reduction = Defender.GetFollowUpDamageAlteration("PercentageReduction");
         double extraDamage = Attacker.GetFollowUpDamageAlteration("ExtraDamage");
         double absoluteReduction = Defender.GetFollowUpDamageAlteration("AbsoluteReduction");
-        
-        Attacker.DamageStatsFollowUp["damage"] = damage;
-        Attacker.DamageStatsFollowUp["reduction"] = reduction;
-        Attacker.DamageStatsFollowUp["extraDamage"] = extraDamage;
-        Attacker.DamageStatsFollowUp["absoluteReduction"] = absoluteReduction;
 
         return CalculateDamage(damage, reduction, extraDamage, absoluteReduction);
     }
     
-    private int ApplyDamageAlterationsForFollowUpDefense(int damage)
+    private int ApplyDamageAlterationsForCounter(int damage)
+    {
+        double reduction = Attacker.GetFirstAttackDamageAlteration("PercentageReduction");
+        double extraDamage = Defender.GetFirstAttackDamageAlteration("ExtraDamage");
+        double absoluteReduction = Attacker.GetFirstAttackDamageAlteration("AbsoluteReduction");
+
+        return CalculateDamage(damage, reduction, extraDamage, absoluteReduction);
+    }
+    
+    private int ApplyDamageAlterationsForDefense(int damage)
     {
         double reduction = Attacker.GetFollowUpDamageAlteration("PercentageReduction");
         double extraDamage = Defender.GetFollowUpDamageAlteration("ExtraDamage");
         double absoluteReduction = Attacker.GetFollowUpDamageAlteration("AbsoluteReduction");
-        
-        Defender.DamageStatsFollowUp["damage"] = damage;
-        Defender.DamageStatsFollowUp["reduction"] = reduction;
-        Defender.DamageStatsFollowUp["extraDamage"] = extraDamage;
-        Defender.DamageStatsFollowUp["absoluteReduction"] = absoluteReduction;
 
         return CalculateDamage(damage, reduction, extraDamage, absoluteReduction);
     }

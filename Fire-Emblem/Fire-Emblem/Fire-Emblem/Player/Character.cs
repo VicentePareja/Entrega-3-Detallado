@@ -21,9 +21,6 @@ public class Character
     [JsonConverter(typeof(StringToIntConverter))] [JsonPropertyName("Def")] public int Def { get; set; }
     [JsonConverter(typeof(StringToIntConverter))] [JsonPropertyName("Res")] public int Res { get; set; }
     public List<Skill> Skills { get; private set; }
-    
-    public Dictionary<string, double> DamageStatsFirstAttack { get; private set; }
-    public Dictionary<string, double> DamageStatsFollowUp { get; private set; }
     public Dictionary<string, int> TemporaryBonuses { get; private set; }
     public Dictionary<string, int> TemporaryPenalties { get; private set; }
     public Dictionary<string, double> TemporaryDamageAlterations { get; private set; }
@@ -33,7 +30,7 @@ public class Character
     public Dictionary<string, int> TemporaryFollowUpBonuses { get; private set; }
     public Dictionary<string, int> TemporaryFollowUpPenalties { get; private set; }
     public Dictionary<string, double> FollowUpDamageAlterations { get; private set; }
-    
+    public Dictionary<string, double> DamageReduced { get; private set; }
     
     public bool AreAtkBonusesEnabled { get; set; } = true;
     public bool AreDefBonusesEnabled { get; set; } = true;
@@ -47,8 +44,6 @@ public class Character
     public Character()
     {
         Skills = new List<Skill>();
-        DamageStatsFirstAttack = new Dictionary<string, double>();
-        DamageStatsFollowUp = new Dictionary<string, double>();
         TemporaryBonuses = new Dictionary<string, int>();
         TemporaryPenalties = new Dictionary<string, int>();
         TemporaryDamageAlterations = new Dictionary<string, double>();
@@ -58,6 +53,8 @@ public class Character
         TemporaryFollowUpBonuses = new Dictionary<string, int>();
         TemporaryFollowUpPenalties = new Dictionary<string, int>();
         FollowUpDamageAlterations = new Dictionary<string, double>();
+        DamageReduced = new Dictionary<string, double>();
+        
     }
 
     public void AddSkill(Skill skill)
