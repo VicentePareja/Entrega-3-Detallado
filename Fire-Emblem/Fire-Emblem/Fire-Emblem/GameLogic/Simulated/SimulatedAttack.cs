@@ -1,18 +1,15 @@
-﻿using Fire_Emblem_View;
+using Fire_Emblem_View;
 namespace Fire_Emblem;
 
-public class Attack
+public class SimulatedAttack
 {
     public Character Attacker { get; private set; }
     public Character Defender { get; private set; }
-    
-    private View _view;
 
-    public Attack(Character attacker, Character defender, View view)
+    public SimulatedAttack(Character attacker, Character defender)
     {
         Attacker = attacker;
         Defender = defender;
-        _view = view;
     }
     
     public void PerformAttack(string advantage)
@@ -23,8 +20,7 @@ public class Attack
         
         int damage = CalculateBaseDamageForAttack(attackerAtk, defenderDef, weaponTriangleBonus);
         damage = ApplyDamageAlterationsForAttack(damage);
-        _view.WriteLine($"{Attacker.Name} ataca a {Defender.Name} con {damage} de daño");
-        Defender.CurrentHP -= damage;
+
     }
     
     public void PerformCounterAttack(string advantage)
@@ -32,11 +28,9 @@ public class Attack
         double weaponTriangleBonus = CalculateWeaponTriangleBonusForDefense(advantage);
         int defenderAtk = Defender.GetFirstAttackAttribute("Atk");
         int attackerDef = Attacker.GetFirstAttackAttribute(Defender.Weapon == "Magic" ? "Res" : "Def");
-
         int damage = CalculateBaseDamageForDefense(defenderAtk, attackerDef, weaponTriangleBonus);
         damage = ApplyDamageAlterationsForCounter(damage);
-        _view.WriteLine($"{Defender.Name} ataca a {Attacker.Name} con {damage} de daño");
-        Attacker.CurrentHP -= damage;
+
     }
     
     public void PerformFollowUpAttacker(string advantage)
@@ -44,12 +38,9 @@ public class Attack
         double weaponTriangleBonus = CalculateWeaponTriangleBonusForAttack(advantage);
         int attackerAtk = Attacker.GetFollowUpAttribute("Atk");
         int defenderDef = Defender.GetFollowUpAttribute(Attacker.Weapon == "Magic" ? "Res" : "Def");
-
         int damage = CalculateBaseDamageForAttack(attackerAtk, defenderDef, weaponTriangleBonus);
         damage = ApplyDamageAlterationsForFollowUp(damage);
-        _view.WriteLine($"{Attacker.Name} ataca a {Defender.Name} con {damage} de daño");
-
-        Defender.CurrentHP -= damage;
+        
     }
     
     public void PerformFollowUpDefender(string advantage)
@@ -60,13 +51,12 @@ public class Attack
 
         int damage = CalculateBaseDamageForDefense(defenderAtk, attackerDef, weaponTriangleBonus);
         damage = ApplyDamageAlterationsForFollowUpDefense(damage);
-        _view.WriteLine($"{Defender.Name} ataca a {Attacker.Name} con {damage} de daño");
-
-        Attacker.CurrentHP -= damage;
+        
     }
     
     private int CalculateDamage(int baseDamage, double reduction, double extraDamage, double absoluteReduction)
     {   
+        
         double initialDamage = (double)baseDamage;
         double newDamage = initialDamage + Math.Floor(extraDamage);
         double damageReduced = newDamage * (100.0 - reduction) / 100.0;
