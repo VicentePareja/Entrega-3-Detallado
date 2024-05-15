@@ -53,6 +53,7 @@ public class Character
         TemporaryFollowUpBonuses = new Dictionary<string, int>();
         TemporaryFollowUpPenalties = new Dictionary<string, int>();
         FollowUpDamageAlterations = new Dictionary<string, double>();
+        DamageReduced = new Dictionary<string, double>();
         
     }
 

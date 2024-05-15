@@ -141,7 +141,7 @@ namespace Fire_Emblem
                 Attack followUpAttack = new Attack(_attacker, _defender, _view);
                 if (_attacker.GetEffectiveAttribute("Spd") >= _defender.GetEffectiveAttribute("Spd") + 5)
                 {
-                    followUpAttack.PerformFollowUpAtacker(_advantage);
+                    followUpAttack.PerformFollowUpAttacker(_advantage);
                 }
                 else if (_defender.GetEffectiveAttribute("Spd") >= _attacker.GetEffectiveAttribute("Spd") + 5)
                 {

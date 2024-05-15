@@ -5,6 +5,7 @@ public class Attack
 {
     public Character Attacker { get; private set; }
     public Character Defender { get; private set; }
+    
     private View _view;
 
     public Attack(Character attacker, Character defender, View view)
@@ -12,6 +13,56 @@ public class Attack
         Attacker = attacker;
         Defender = defender;
         _view = view;
+    }
+    
+    public void PerformAttack(string advantage)
+    {
+        double weaponTriangleBonus = CalculateWeaponTriangleBonusForAttack(advantage);
+        int attackerAtk = Attacker.GetFirstAttackAttribute("Atk");
+        int defenderDef = Defender.GetFirstAttackAttribute(Attacker.Weapon == "Magic" ? "Res" : "Def");
+        
+        int damage = CalculateBaseDamageForAttack(attackerAtk, defenderDef, weaponTriangleBonus);
+        damage = ApplyDamageAlterationsForAttack(damage);
+        _view.WriteLine($"{Attacker.Name} ataca a {Defender.Name} con {damage} de daño");
+        Defender.CurrentHP -= damage;
+    }
+    
+    public void PerformCounterAttack(string advantage)
+    {
+        double weaponTriangleBonus = CalculateWeaponTriangleBonusForDefense(advantage);
+        int defenderAtk = Defender.GetFirstAttackAttribute("Atk");
+        int attackerDef = Attacker.GetFirstAttackAttribute(Defender.Weapon == "Magic" ? "Res" : "Def");
+
+        int damage = CalculateBaseDamageForDefense(defenderAtk, attackerDef, weaponTriangleBonus);
+        damage = ApplyDamageAlterationsForCounter(damage);
+        _view.WriteLine($"{Defender.Name} ataca a {Attacker.Name} con {damage} de daño");
+        Attacker.CurrentHP -= damage;
+    }
+    
+    public void PerformFollowUpAttacker(string advantage)
+    {
+        double weaponTriangleBonus = CalculateWeaponTriangleBonusForAttack(advantage);
+        int attackerAtk = Attacker.GetFollowUpAttribute("Atk");
+        int defenderDef = Defender.GetFollowUpAttribute(Attacker.Weapon == "Magic" ? "Res" : "Def");
+
+        int damage = CalculateBaseDamageForAttack(attackerAtk, defenderDef, weaponTriangleBonus);
+        damage = ApplyDamageAlterationsForFollowUp(damage);
+        _view.WriteLine($"{Attacker.Name} ataca a {Defender.Name} con {damage} de daño");
+
+        Defender.CurrentHP -= damage;
+    }
+    
+    public void PerformFollowUpDefender(string advantage)
+    {
+        double weaponTriangleBonus = CalculateWeaponTriangleBonusForDefense(advantage);
+        int defenderAtk = Defender.GetFollowUpAttribute("Atk");
+        int attackerDef = Attacker.GetFollowUpAttribute(Defender.Weapon == "Magic" ? "Res" : "Def");
+
+        int damage = CalculateBaseDamageForDefense(defenderAtk, attackerDef, weaponTriangleBonus);
+        damage = ApplyDamageAlterationsForDefense(damage);
+        _view.WriteLine($"{Defender.Name} ataca a {Attacker.Name} con {damage} de daño");
+
+        Attacker.CurrentHP -= damage;
     }
     
     private int CalculateDamage(int baseDamage, double reduction, double extraDamage, double absoluteReduction)
@@ -23,74 +74,70 @@ public class Attack
         return Math.Max(Convert.ToInt32(Math.Floor(damageReduced)) + Convert.ToInt32(absoluteReduction),0);
     }
 
-    public void PerformAttack(string advantage)
+    private double CalculateWeaponTriangleBonusForAttack(string advantage)
     {
-        double weaponTriangleBonus = advantage == "atacante" ? 1.2 : advantage == "defensor" ? 0.8 : 1.0;
-        int attackerAtk = Attacker.GetFirstAttackAttribute("Atk");
-        int defenderDef = Defender.GetFirstAttackAttribute(Attacker.Weapon == "Magic" ? "Res" : "Def");
-        
-        int damage = Math.Max((int)((attackerAtk * weaponTriangleBonus) - defenderDef),0);
+        return advantage switch
+        {
+            "atacante" => 1.2,
+            "defensor" => 0.8,
+            _ => 1.0,
+        };
+    }
+    
+    private double CalculateWeaponTriangleBonusForDefense(string advantage)
+    {
+        return advantage switch
+        {
+            "defensor" => 1.2,
+            "atacante" => 0.8,
+            _ => 1.0,
+        };
+    }
+    
+    private int CalculateBaseDamageForAttack(int attackerAtk, int defenderDef, double weaponTriangleBonus)
+    {
+        return Math.Max((int)(attackerAtk * weaponTriangleBonus - defenderDef), 0);
+    }
+    
+    private int CalculateBaseDamageForDefense(int attackValue, int defenseValue, double weaponTriangleBonus)
+    {
+        return Math.Max((int)(attackValue * weaponTriangleBonus - defenseValue), 0);
+    }
+    
+    private int ApplyDamageAlterationsForAttack(int damage)
+    {
         double reduction = Defender.GetFirstAttackDamageAlteration("PercentageReduction");
         double extraDamage = Attacker.GetFirstAttackDamageAlteration("ExtraDamage");
         double absoluteReduction = Defender.GetFirstAttackDamageAlteration("AbsoluteReduction");
-        
-        damage = CalculateDamage(damage, reduction, extraDamage, absoluteReduction);
-        _view.WriteLine($"{Attacker.Name} ataca a {Defender.Name} con {damage} de daño");
-        Defender.CurrentHP -= damage;
-    }
 
-    public void PerformCounterAttack(string advantage)
-    {
-        double weaponTriangleBonus = advantage == "defensor" ? 1.2 : advantage == "atacante" ? 0.8 : 1.0;
-        
-        int defenderAtk = Defender.GetFirstAttackAttribute("Atk");
-        int attackerDef = Attacker.GetFirstAttackAttribute(Defender.Weapon == "Magic" ? "Res" : "Def");
-
-        int damage = Math.Max((int)((defenderAtk * weaponTriangleBonus) - attackerDef),0);
-        double reduction = Attacker.GetFirstAttackDamageAlteration("PercentageReduction");
-        double extraDamage = Defender.GetFirstAttackDamageAlteration("ExtraDamage");
-        double absoluteReduction = Attacker.GetFirstAttackDamageAlteration("AbsoluteReduction");
-        damage = CalculateDamage(damage, reduction, extraDamage, absoluteReduction);
-
-        _view.WriteLine($"{Defender.Name} ataca a {Attacker.Name} con {damage} de daño");
-
-        Attacker.CurrentHP -= damage;
+        return CalculateDamage(damage, reduction, extraDamage, absoluteReduction);
     }
     
-    public void PerformFollowUpAtacker(string advantage)
+    private int ApplyDamageAlterationsForFollowUp(int damage)
     {
-        double weaponTriangleBonus = advantage == "atacante" ? 1.2 : advantage == "defensor" ? 0.8 : 1.0;
-        
-        int attackerAtk = Attacker.GetFollowUpAttribute("Atk");
-        int defenderDef = Defender.GetFollowUpAttribute(Attacker.Weapon == "Magic" ? "Res" : "Def");
-
-        int damage = Math.Max((int)((attackerAtk * weaponTriangleBonus) - defenderDef),0);
         double reduction = Defender.GetFollowUpDamageAlteration("PercentageReduction");
         double extraDamage = Attacker.GetFollowUpDamageAlteration("ExtraDamage");
         double absoluteReduction = Defender.GetFollowUpDamageAlteration("AbsoluteReduction");
-        damage = CalculateDamage(damage, reduction, extraDamage, absoluteReduction);
 
-        _view.WriteLine($"{Attacker.Name} ataca a {Defender.Name} con {damage} de daño");
-
-        Defender.CurrentHP -= damage;
+        return CalculateDamage(damage, reduction, extraDamage, absoluteReduction);
     }
     
-    public void PerformFollowUpDefender(string advantage)
+    private int ApplyDamageAlterationsForCounter(int damage)
     {
-        double weaponTriangleBonus = advantage == "defensor" ? 1.2 : advantage == "atacante" ? 0.8 : 1.0;
-        
-        int defenderAtk = Defender.GetFollowUpAttribute("Atk");
-        int attackerDef = Attacker.GetFollowUpAttribute(Defender.Weapon == "Magic" ? "Res" : "Def");
+        double reduction = Attacker.GetFirstAttackDamageAlteration("PercentageReduction");
+        double extraDamage = Defender.GetFirstAttackDamageAlteration("ExtraDamage");
+        double absoluteReduction = Attacker.GetFirstAttackDamageAlteration("AbsoluteReduction");
 
-        int damage = Math.Max((int)((defenderAtk * weaponTriangleBonus) - attackerDef),0);
+        return CalculateDamage(damage, reduction, extraDamage, absoluteReduction);
+    }
+    
+    private int ApplyDamageAlterationsForDefense(int damage)
+    {
         double reduction = Attacker.GetFollowUpDamageAlteration("PercentageReduction");
         double extraDamage = Defender.GetFollowUpDamageAlteration("ExtraDamage");
         double absoluteReduction = Attacker.GetFollowUpDamageAlteration("AbsoluteReduction");
-        damage = CalculateDamage(damage, reduction, extraDamage, absoluteReduction);
 
-        _view.WriteLine($"{Defender.Name} ataca a {Attacker.Name} con {damage} de daño");
-
-        Attacker.CurrentHP -= damage;
+        return CalculateDamage(damage, reduction, extraDamage, absoluteReduction);
     }
     
 }
