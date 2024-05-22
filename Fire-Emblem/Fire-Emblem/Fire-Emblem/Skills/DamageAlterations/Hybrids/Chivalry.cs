@@ -9,10 +9,14 @@ namespace Fire_Emblem {
             bool isOppnentFullHP = opponent.CurrentHP == opponent.MaxHP;
             bool isOwnerAtacking = combat._attacker == owner;
 
-            if (isOppnentFullHP && isOwnerAtacking) {
+            if (IsEffectApplicable(isOppnentFullHP, isOwnerAtacking)) {
                 owner.AddTemporaryDamageAlteration("ExtraDamage", 2);
                 owner.AddTemporaryDamageAlteration("AbsoluteReduction", -2);
             }
+        }
+        
+        private bool IsEffectApplicable(bool isOppnentFullHP, bool isOwnerAtacking) {
+            return isOppnentFullHP && isOwnerAtacking;
         }
     }
 }

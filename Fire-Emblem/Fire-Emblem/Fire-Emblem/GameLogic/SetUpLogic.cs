@@ -105,30 +105,54 @@ namespace Fire_Emblem
         {
             foreach (var line in lines)
             {
-                if (line == "Player 1 Team")
+                if (line == "Player 1 Team" || line == "Player 2 Team")
                 {
-                    if (!_isPlayer1Team && _currentTeamNames.Any())
-                    {
-                        _team2Populated = true;
-                        if (!FinalizeTeam(_currentTeamNames, _player2.Team)) return;
-                    }
-                    _isPlayer1Team = true;
-                }
-                else if (line == "Player 2 Team")
-                {
-                    if (_isPlayer1Team && _currentTeamNames.Any())
-                    {
-                        _team1Populated = true;
-                        if (!FinalizeTeam(_currentTeamNames, _player1.Team)) return;
-                    }
-                    _isPlayer1Team = false;
+                    HandleTeamSwitch(line);
                 }
                 else
                 {
-                    _currentTeamNames.Add(line);
+                    AddPlayerToTeam(line);
                 }
             }
         }
+
+        private void HandleTeamSwitch(string line)
+        {
+            bool switchToPlayer1 = line == "Player 1 Team";
+            if (ShouldSwitchTeams(switchToPlayer1))
+            {
+                if (switchToPlayer1)
+                {
+                    if (!ProcessTeamSwitch(_player2.Team))
+                        return;
+                }
+                else
+                {
+                    if (!ProcessTeamSwitch(_player1.Team))
+                        return;
+                }
+            }
+            _isPlayer1Team = switchToPlayer1;
+        }
+
+        private bool ShouldSwitchTeams(bool switchToPlayer1)
+        {
+            return switchToPlayer1 != _isPlayer1Team && _currentTeamNames.Any();
+        }
+
+        private bool ProcessTeamSwitch(Team team)
+        {
+            _team2Populated = team == _player2.Team;
+            _team1Populated = team == _player1.Team;
+            return FinalizeTeam(_currentTeamNames, team);
+        }
+
+
+        private void AddPlayerToTeam(string playerName)
+        {
+            _currentTeamNames.Add(playerName);
+        }
+
         
         private bool CheckFinalTeamsPopulated()
         {
@@ -276,22 +300,29 @@ namespace Fire_Emblem
 
         private void AssignSkillsToCharacter(Character character, string skillsText) {
             if (!string.IsNullOrEmpty(skillsText)) {
-                var skillNames = skillsText.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+                var skillNames = ExtractSkillNames(skillsText);
                 var skillFactory = new SkillFactory();
-
                 foreach (var skillName in skillNames) {
-                    var trimmedSkillName = skillName.Trim();
-                    var skill = _skills.FirstOrDefault(s => s.Name.Equals(trimmedSkillName, StringComparison.OrdinalIgnoreCase));
-                    if (skill != null) {
-                        skill = skillFactory.CreateSkill(skill.Name, skill.Description);
-                    } else {
-                        skill = skillFactory.CreateSkill(trimmedSkillName, "Descripción no proporcionada");
-                    }
-
+                    var skill = CreateSkill(skillName, skillFactory);
                     character.AddSkill(skill);
                 }
             }
         }
+
+        private IEnumerable<string> ExtractSkillNames(string skillsText) {
+            return skillsText.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries)
+                .Select(skillName => skillName.Trim());
+        }
+
+        private Skill CreateSkill(string skillName, SkillFactory skillFactory) {
+            var skill = _skills.FirstOrDefault(s => s.Name.Equals(skillName, StringComparison.OrdinalIgnoreCase));
+            if (skill != null) {
+                return skillFactory.CreateSkill(skill.Name, skill.Description);
+            } else {
+                return skillFactory.CreateSkill(skillName, "Descripción no proporcionada");
+            }
+        }
+
 
 
         private void AssignCharacterToTeam(string characterLine, Team team)

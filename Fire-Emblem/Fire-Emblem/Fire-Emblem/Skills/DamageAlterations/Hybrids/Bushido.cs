@@ -12,14 +12,22 @@ public class Bushido : DamageAlterationSkill
         owner.AddTemporaryDamageAlteration("ExtraDamage", extraDamage);
 
         Combat combat = battle.CurrentCombat;
-        Character opponent = (combat._attacker == owner) ? combat._defender : combat._attacker;
-        int speedDifference = owner.GetEffectiveAttribute("Spd") - opponent.GetEffectiveAttribute("Spd");
+        Character opponent = GetOpponent(combat, owner);
+        ApplySpeedBasedDamageReduction(owner, opponent);
+    }
 
+    private Character GetOpponent(Combat combat, Character owner)
+    {
+        return (combat._attacker == owner) ? combat._defender : combat._attacker;
+    }
+
+    private void ApplySpeedBasedDamageReduction(Character owner, Character opponent)
+    {
+        int speedDifference = owner.GetEffectiveAttribute("Spd") - opponent.GetEffectiveAttribute("Spd");
         if (speedDifference > 0)
         {
             int damageReductionPercentage = speedDifference * 4;
-            if (damageReductionPercentage > 40) damageReductionPercentage = 40;
-
+            damageReductionPercentage = Math.Min(damageReductionPercentage, 40);  // Ensure max reduction is capped at 40%
             owner.MultiplyTemporaryDamageAlterations("PercentageReduction", damageReductionPercentage);
         }
     }
