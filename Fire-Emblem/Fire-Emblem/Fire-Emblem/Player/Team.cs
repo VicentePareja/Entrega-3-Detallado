@@ -64,7 +64,6 @@ public class Team
     
     public bool IsTeamValid()
     {
-        //PrintTeam();
   
         if (Characters.Count < 1 || Characters.Count > 3)
         {

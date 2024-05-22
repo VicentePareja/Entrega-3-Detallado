@@ -8,17 +8,17 @@ namespace Fire_Emblem
 {
     public class SetUpLogic
     {
-        private View _view;
-        private string _teamsFolder;
+        private readonly View _view;
+        private readonly string _teamsFolder;
+        private readonly List<string> _currentTeamNames = new List<string>();
         private List<Character> _characters;
         private List<Skill> _skills;
         private Player _player1;
         private Player _player2;
-        
         private bool _isPlayer1Team = true;
         private bool _team1Populated = false;
         private bool _team2Populated = false;
-        private List<string> _currentTeamNames = new List<string>();
+        
 
         public SetUpLogic(View view, string teamsFolder)
         {
@@ -35,13 +35,6 @@ namespace Fire_Emblem
     
             ShowAvailableFiles();
             string selectedFile = SelectFile();
-    
-            if (selectedFile == null)
-            {
-                _view.WriteLine("Selección inválida.");
-                return false;
-            }
-    
             ImportCharacters();
             ImportSkills();
     
@@ -170,19 +163,6 @@ namespace Fire_Emblem
             }
 
             return _team1Populated && _team2Populated;
-        }
-
-        private (string[] lines, bool isPlayer1, Team team1, Team team2, bool team1Populated
-            , bool team2Populated, List<string> currentTeamNames) InitializeTeams(string selectedFile)
-        {
-            var lines = File.ReadAllLines(selectedFile);
-            bool isPlayer1 = true;
-            Team team1 = new Team();
-            Team team2 = new Team();
-            bool team1Populated = false;
-            bool team2Populated = false;
-            List<string> currentTeamNames = new List<string>();
-            return (lines, isPlayer1, team1, team2, team1Populated, team2Populated, currentTeamNames);
         }
 
         private bool FinalizeTeam(List<string> currentTeamNames, Team team)

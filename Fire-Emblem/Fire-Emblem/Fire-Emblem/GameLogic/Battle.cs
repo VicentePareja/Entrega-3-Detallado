@@ -3,101 +3,116 @@ namespace Fire_Emblem
 {
     public class Battle
     {
-        public Player Player1 { get; set; }
-        public Player Player2 { get; set; }
-        private View _view;
+        private readonly Player _player1;
+        private readonly Player _player2;
+        private readonly Dictionary<string, string> _advantages;
+        private readonly View _view;
+        private bool _gameFinished = false;
+        private int _turn = 0;
+        private Character _attackerUnit;
+        private Character _defenderUnit;
+        private string _currentAdvantage;
         public Combat CurrentCombat { get; private set; } = null;
         public List<(Character Attacker, Character Defender)> CombatHistory { get; private set; }
 
         public Battle(Player player1, Player player2, View view)
         {
-            Player1 = player1;
-            Player2 = player2;
+            _player1 = player1;
+            _player2 = player2;
             _view = view;
-            CombatHistory = new List<(Character Attacker, Character Defender)>();
-        }
-
-        public void Start()
-        {
-            int counter = 0;
-            bool run = true;
-            while (run) 
-            {
-                counter++;
-                if (counter % 2 == 1) 
-                {
-                    PerformTurn(Player1, Player2, counter);
-                }
-                else
-                {
-                    PerformTurn(Player2, Player1, counter);
-                }
-                run = !IsGameFinished();
-            }
-            AnnounceWinner();
-        }
-        
-
-        private (Character attacker, Character defender, string advantage) PrepareAttack(Player attacker, Player defender, int turn)
-        {
-            Character attackerUnit = ChooseUnit(attacker);
-            Character defenderUnit = ChooseUnit(defender);
-            _view.WriteLine($"Round {turn}: {attackerUnit.Name} ({attacker.Name}) comienza");
-            string advantage = CalculateAdvantage(attackerUnit, defenderUnit);
-            PrintAdvantage(attackerUnit, defenderUnit, advantage);
-    
-            return (attackerUnit, defenderUnit, advantage);
-        }
-        
-        
-        private void PerformTurn(Player attacker, Player defender, int turn)
-        {
-            var (attackerUnit, defenderUnit, advantage) = PrepareAttack(attacker, defender, turn);
-            CurrentCombat = new Combat( attackerUnit, defenderUnit, advantage, _view, this);
-            CurrentCombat.Start();
-            CombatHistory.Add((Attacker: attackerUnit, Defender: defenderUnit));
-            
-            if (attackerUnit.CurrentHP <= 0)
-            {
-                attacker.Team.Characters.Remove(attackerUnit);
-            }
-            if (defenderUnit.CurrentHP <= 0)
-            {
-                defender.Team.Characters.Remove(defenderUnit);
-            }
-        }
-
-        
-
-        public string CalculateAdvantage(Character attacker, Character defender)
-        {
-            var advantages = new Dictionary<string, string>
+            _advantages = new Dictionary<string, string>
             {
                 {"Sword", "Axe"},
                 {"Axe", "Lance"},
                 {"Lance", "Sword"}
             };
+            CombatHistory = new List<(Character Attacker, Character Defender)>();
+        }
 
-            if (advantages.ContainsKey(attacker.Weapon) && advantages[attacker.Weapon] == defender.Weapon)
+        public void Start()
+        {
+            _gameFinished = false;
+            while (!_gameFinished) 
+            {
+                _turn++;
+                if (_turn % 2 == 1) 
+                {
+                    PerformTurn(_player1, _player2);
+                }
+                else
+                {
+                    PerformTurn(_player2, _player1);
+                }
+                _gameFinished = IsGameFinished();
+            }
+            AnnounceWinner();
+        }
+        
+
+        private void PrepareAttack(Player attackerPlayer, Player defenderPlayer)
+        {
+            _attackerUnit = ChooseUnit(attackerPlayer);
+            _defenderUnit = ChooseUnit(defenderPlayer);
+            _view.WriteLine($"Round {_turn}: {_attackerUnit.Name} ({attackerPlayer.Name}) comienza");
+            _currentAdvantage = CalculateAdvantage();
+            PrintAdvantage();
+
+        }
+        
+        
+        private void PerformTurn(Player attackerPlayer, Player defenderPlayer)
+        {
+            PrepareAttack(attackerPlayer, defenderPlayer);
+            CurrentCombat = new Combat( _attackerUnit, _defenderUnit, _currentAdvantage, _view, this);
+            CurrentCombat.Start();
+            CombatHistory.Add((Attacker: _attackerUnit, Defender: _defenderUnit));
+            
+            if (_attackerUnit.CurrentHP <= 0)
+            {
+                attackerPlayer.Team.Characters.Remove(_attackerUnit);
+            }
+            if (_defenderUnit.CurrentHP <= 0)
+            {
+                defenderPlayer.Team.Characters.Remove(_defenderUnit);
+            }
+        }
+
+        
+
+        public string CalculateAdvantage()
+        {
+            if (IsAdvantageAttacker())
             {
                 return "atacante";
             }
-            else if (advantages.ContainsKey(defender.Weapon) && advantages[defender.Weapon] == attacker.Weapon)
+            else if (IsAdvantageDefender())
             {
                 return "defensor";
             }
             return "ninguno";
         }
 
-        public void PrintAdvantage(Character attacker, Character defender, string advantage)
+        private bool IsAdvantageAttacker()
         {
-            switch (advantage)
+            return _advantages.ContainsKey(_attackerUnit.Weapon) &&
+                   _advantages[_attackerUnit.Weapon] == _defenderUnit.Weapon;
+        }
+        
+        private bool IsAdvantageDefender()
+        {
+            return _advantages.ContainsKey(_defenderUnit.Weapon) &&
+                   _advantages[_defenderUnit.Weapon] == _attackerUnit.Weapon;
+        }
+
+        private void PrintAdvantage()
+        {
+            switch (_currentAdvantage)
             {
                 case "atacante":
-                    _view.WriteLine($"{attacker.Name} ({attacker.Weapon}) tiene ventaja con respecto a {defender.Name} ({defender.Weapon})");
+                    _view.WriteLine($"{_attackerUnit.Name} ({_attackerUnit.Weapon}) tiene ventaja con respecto a {_defenderUnit.Name} ({_defenderUnit.Weapon})");
                     break;
                 case "defensor":
-                    _view.WriteLine($"{defender.Name} ({defender.Weapon}) tiene ventaja con respecto a {attacker.Name} ({attacker.Weapon})");
+                    _view.WriteLine($"{_defenderUnit.Name} ({_defenderUnit.Weapon}) tiene ventaja con respecto a {_attackerUnit.Name} ({_attackerUnit.Weapon})");
                     break;
                 default:
                     _view.WriteLine("Ninguna unidad tiene ventaja con respecto a la otra");
@@ -137,18 +152,18 @@ namespace Fire_Emblem
 
         private bool IsGameFinished()
         {
-            return Player1.Team.Characters.Count == 0 || Player2.Team.Characters.Count == 0;
+            return _player1.Team.Characters.Count == 0 || _player2.Team.Characters.Count == 0;
         }
 
         private void AnnounceWinner()
         {
-            if (Player1.Team.Characters.Count == 0)
+            if (_player1.Team.Characters.Count == 0)
             {
-                _view.WriteLine($"{Player2.Name} ganó");
+                _view.WriteLine($"{_player2.Name} ganó");
             }
-            else if (Player2.Team.Characters.Count == 0)
+            else if (_player2.Team.Characters.Count == 0)
             {
-                _view.WriteLine($"{Player1.Name} ganó");
+                _view.WriteLine($"{_player1.Name} ganó");
             }
             else
             {

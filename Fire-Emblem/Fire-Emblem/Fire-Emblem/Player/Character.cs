@@ -23,13 +23,13 @@ public class Character
     public List<Skill> Skills { get; private set; }
     public Dictionary<string, int> TemporaryBonuses { get; private set; }
     public Dictionary<string, int> TemporaryPenalties { get; private set; }
-    public Dictionary<string, double> TemporaryDamageAlterations { get; private set; }
+    private Dictionary<string, double> TemporaryDamageAlterations { get; set; }
     public Dictionary<string, int> TemporaryFirstAttackBonuses { get; private set; }
     public Dictionary<string, int> TemporaryFirstAttackPenalties { get; private set; }
-    public Dictionary<string, double> FirstAttackDamageAlterations { get; private set; }
+    private Dictionary<string, double> FirstAttackDamageAlterations { get; set; }
     public Dictionary<string, int> TemporaryFollowUpBonuses { get; private set; }
     public Dictionary<string, int> TemporaryFollowUpPenalties { get; private set; }
-    public Dictionary<string, double> FollowUpDamageAlterations { get; private set; }
+    private Dictionary<string, double> FollowUpDamageAlterations { get; set; }
     public Dictionary<string, double> DamageReduced { get; private set; }
     
     public bool AreAtkBonusesEnabled { get; set; } = true;
