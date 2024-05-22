@@ -11,9 +11,9 @@ public class Bushido : DamageAlterationSkill
         double extraDamage = 7.0;
         owner.AddTemporaryDamageAlteration("ExtraDamage", extraDamage);
 
-        Combat combat = battle.currentCombat;
+        Combat combat = battle.CurrentCombat;
         Character opponent = (combat._attacker == owner) ? combat._defender : combat._attacker;
-        int speedDifference = owner.Spd - opponent.Spd;
+        int speedDifference = owner.GetEffectiveAttribute("Spd") - opponent.GetEffectiveAttribute("Spd");
 
         if (speedDifference > 0)
         {

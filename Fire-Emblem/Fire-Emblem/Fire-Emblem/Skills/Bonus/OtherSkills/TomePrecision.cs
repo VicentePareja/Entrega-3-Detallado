@@ -7,7 +7,7 @@ namespace Fire_Emblem {
         }
 
         public override void ApplyEffect(Battle battle, Character owner) {
-            Combat combat = battle.currentCombat;
+            Combat combat = battle.CurrentCombat;
             if (owner.Weapon == "Magic") {
                 owner.AddTemporaryBonus("Spd", Bonus);
                 owner.AddTemporaryBonus("Atk", Bonus);

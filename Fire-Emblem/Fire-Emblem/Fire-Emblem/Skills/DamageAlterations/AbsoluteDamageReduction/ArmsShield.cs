@@ -7,7 +7,7 @@ public class ArmsShield : DamageAlterationSkill
 
     public override void ApplyEffect(Battle battle, Character owner)
     {
-        Combat combat = battle.currentCombat;
+        Combat combat = battle.CurrentCombat;
         string advantage = combat._advantage;
         bool isOwnerAdvantage;
         

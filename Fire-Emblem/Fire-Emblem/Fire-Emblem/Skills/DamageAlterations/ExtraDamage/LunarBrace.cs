@@ -6,14 +6,14 @@ public class LunarBrace : DamageAlterationSkill
 
     public override void ApplyEffect(Battle battle, Character owner)
     {
-        Combat combat = battle.currentCombat;
+        Combat combat = battle.CurrentCombat;
         bool isOwnerInitiator = combat._attacker == owner;
         bool isPhysicalAttack = owner.Weapon != "Magic";
 
         if (isOwnerInitiator && isPhysicalAttack)
         {
             Character opponent = combat._defender;
-            double extraDamage = opponent.Def * 0.3;
+            double extraDamage = opponent.GetEffectiveAttribute("Def") * 0.3;
             owner.AddTemporaryDamageAlteration("ExtraDamage", extraDamage);
         }
     }

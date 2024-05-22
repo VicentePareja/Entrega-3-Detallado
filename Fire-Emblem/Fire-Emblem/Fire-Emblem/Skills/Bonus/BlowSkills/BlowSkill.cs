@@ -9,7 +9,7 @@
 
         public override void ApplyEffect(Battle battle, Character owner)
         {
-            if (battle.currentCombat._attacker == owner)
+            if (battle.CurrentCombat._attacker == owner)
             {
                 ApplySpecificEffect(owner);
             }

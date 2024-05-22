@@ -4,7 +4,7 @@ namespace Fire_Emblem {
         }
 
         public override void ApplyEffect(Battle battle, Character owner) {
-            Combat combat = battle.currentCombat;
+            Combat combat = battle.CurrentCombat;
             Character opponent;
             if (owner == combat._attacker) {
                 opponent = combat._defender;

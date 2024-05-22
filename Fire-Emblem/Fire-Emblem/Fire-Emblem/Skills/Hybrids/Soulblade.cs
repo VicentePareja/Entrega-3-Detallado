@@ -1,12 +1,11 @@
 namespace Fire_Emblem {
     public class Soulblade : Skill {
         public Soulblade(string name, string description) : base(name, description) {
-            // No se necesita establecer un bono específico ya que el cálculo depende del rival.
         }
 
         public override void ApplyEffect(Battle battle, Character owner)
         {
-            Combat combat = battle.currentCombat;
+            Combat combat = battle.CurrentCombat;
 
             if (owner.Weapon == "Sword") {
                 Character opponent = (combat._attacker == owner) ? combat._defender : combat._attacker;

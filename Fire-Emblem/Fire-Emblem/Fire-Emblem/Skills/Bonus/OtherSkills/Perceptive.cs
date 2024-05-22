@@ -7,7 +7,7 @@
         }
 
         public override void ApplyEffect(Battle battle, Character owner) {
-            Combat combat = battle.currentCombat;
+            Combat combat = battle.CurrentCombat;
 
             if (owner == combat._attacker)
             {

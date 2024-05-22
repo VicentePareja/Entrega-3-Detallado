@@ -7,8 +7,8 @@ namespace Fire_Emblem {
         }
 
         public override void ApplyEffect(Battle battle, Character owner) {
-            if (battle.currentCombat._defender == owner) {
-                battle.currentCombat._attacker.AddTemporaryPenalty("Atk", Penalty);
+            if (battle.CurrentCombat._defender == owner) {
+                battle.CurrentCombat._attacker.AddTemporaryPenalty("Atk", Penalty);
             }
         }
     }

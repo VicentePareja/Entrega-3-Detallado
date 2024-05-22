@@ -8,7 +8,7 @@ public class RemoteSturdy : DamageAlterationSkill
 
     public override void ApplyEffect(Battle battle, Character owner)
     {
-        Combat combat = battle.currentCombat;
+        Combat combat = battle.CurrentCombat;
 
         if (combat._attacker == owner)
         {

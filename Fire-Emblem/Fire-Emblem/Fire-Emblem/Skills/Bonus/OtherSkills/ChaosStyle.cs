@@ -7,7 +7,7 @@ namespace Fire_Emblem {
         }
 
         public override void ApplyEffect(Battle battle, Character owner) {
-            Combat combat = battle.currentCombat;
+            Combat combat = battle.CurrentCombat;
             if (combat._attacker == owner) {
                 bool isOwnerUsingPhysical = IsPhysicalWeapon(owner.Weapon);
                 bool isOwnerUsingMagical = IsMagicalWeapon(owner.Weapon);

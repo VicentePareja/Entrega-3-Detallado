@@ -3,11 +3,11 @@ namespace Fire_Emblem {
         public GuardBearing(string name, string description) : base(name, description) {
         }
 
-        private bool firstCombatInitiatedByUnit = false;
-        private bool firstCombatInitiatedByOpponent = false;
+        private bool _firstCombatInitiatedByUnit = false;
+        private bool _firstCombatInitiatedByOpponent = false;
 
         public override void ApplyEffect(Battle battle, Character owner) {
-            Combat combat = battle.currentCombat;
+            Combat combat = battle.CurrentCombat;
             Character opponent = DetermineOpponent(combat, owner);
             ApplyStatPenalties(opponent);
             int damageReductionPercentage = CalculateDamageReduction(combat, owner);
@@ -24,8 +24,8 @@ namespace Fire_Emblem {
         }
 
         private int CalculateDamageReduction(Combat combat, Character owner) {
-            if ((combat._attacker == owner && !firstCombatInitiatedByUnit) ||
-                (combat._attacker != owner && !firstCombatInitiatedByOpponent)) {
+            if ((combat._attacker == owner && !_firstCombatInitiatedByUnit) ||
+                (combat._attacker != owner && !_firstCombatInitiatedByOpponent)) {
                 UpdateCombatFlags(combat, owner);
                 return 60;
             } else {
@@ -35,9 +35,9 @@ namespace Fire_Emblem {
 
         private void UpdateCombatFlags(Combat combat, Character owner) {
             if (combat._attacker == owner) {
-                firstCombatInitiatedByUnit = true;
+                _firstCombatInitiatedByUnit = true;
             } else {
-                firstCombatInitiatedByOpponent = true;
+                _firstCombatInitiatedByOpponent = true;
             }
         }
 

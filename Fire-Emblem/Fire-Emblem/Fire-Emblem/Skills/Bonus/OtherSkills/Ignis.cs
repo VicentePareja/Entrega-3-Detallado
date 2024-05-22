@@ -7,7 +7,7 @@ namespace Fire_Emblem {
         }
 
         public override void ApplyEffect(Battle battle, Character owner) {
-            Combat combat = battle.currentCombat;
+            Combat combat = battle.CurrentCombat;
             int bonusAtk = Convert.ToInt32(Math.Floor(owner.Atk * Bonus));
             owner.AddTemporaryFirstAttackBonuses("Atk", bonusAtk);
         }

@@ -10,17 +10,22 @@ namespace Fire_Emblem
     {
         private View _view;
         private string _teamsFolder;
-        private List<Character> characters;
-        private List<Skill> skills;
+        private List<Character> _characters;
+        private List<Skill> _skills;
         private Player _player1;
         private Player _player2;
+        
+        private bool _isPlayer1Team = true;
+        private bool _team1Populated = false;
+        private bool _team2Populated = false;
+        private List<string> _currentTeamNames = new List<string>();
 
         public SetUpLogic(View view, string teamsFolder)
         {
             _view = view;
             _teamsFolder = teamsFolder;
-            characters = new List<Character>();
-            
+            _characters = new List<Character>();
+            _skills = new List<Skill>();
         }
 
         public bool LoadTeams(Player player1, Player player2)
@@ -85,67 +90,62 @@ namespace Fire_Emblem
 
         public bool ValidTeams(string selectedFile)
         {
-            var (lines, isPlayer1, team1, team2, team1Populated
-                , team2Populated, currentTeamNames) = InitializeTeams(selectedFile);
-            
-            (isPlayer1, team1Populated, team2Populated) = ProcessTeamLines(lines, isPlayer1, team1, team2, currentTeamNames);
-            
-            return CheckFinalTeamsPopulated(currentTeamNames, isPlayer1, team1, team2, team1Populated, team2Populated);
+            var lines = File.ReadAllLines(selectedFile);
+            _isPlayer1Team = true;
+            _team1Populated = false;
+            _team2Populated = false;
+            _currentTeamNames.Clear();
+
+            ProcessTeamLines(lines);
+
+            return CheckFinalTeamsPopulated();
         }
         
-        private (bool isPlayer1, bool team1Populated, bool team2Populated) ProcessTeamLines(string[] lines
-            , bool isPlayer1, Team team1, Team team2, List<string> currentTeamNames)
+        private void ProcessTeamLines(string[] lines)
         {
-            bool team1Populated = false;
-            bool team2Populated = false;
-        
             foreach (var line in lines)
             {
                 if (line == "Player 1 Team")
                 {
-                    if (!isPlayer1 && currentTeamNames.Any())
+                    if (!_isPlayer1Team && _currentTeamNames.Any())
                     {
-                        team2Populated = true;
-                        if (!FinalizeTeam(currentTeamNames, team2)) return (isPlayer1, team1Populated, team2Populated);
+                        _team2Populated = true;
+                        if (!FinalizeTeam(_currentTeamNames, _player2.Team)) return;
                     }
-                    isPlayer1 = true;
+                    _isPlayer1Team = true;
                 }
                 else if (line == "Player 2 Team")
                 {
-                    if (isPlayer1 && currentTeamNames.Any())
+                    if (_isPlayer1Team && _currentTeamNames.Any())
                     {
-                        team1Populated = true;
-                        if (!FinalizeTeam(currentTeamNames, team1)) return (isPlayer1, team1Populated, team2Populated);
+                        _team1Populated = true;
+                        if (!FinalizeTeam(_currentTeamNames, _player1.Team)) return;
                     }
-                    isPlayer1 = false;
+                    _isPlayer1Team = false;
                 }
                 else
                 {
-                    currentTeamNames.Add(line);
+                    _currentTeamNames.Add(line);
                 }
             }
-        
-            return (isPlayer1, team1Populated, team2Populated);
         }
-
-
-        private bool CheckFinalTeamsPopulated(List<string> currentTeamNames, bool isPlayer1
-            , Team team1, Team team2, bool team1Populated, bool team2Populated)
+        
+        private bool CheckFinalTeamsPopulated()
         {
-            if (currentTeamNames.Any())
+            if (_currentTeamNames.Any())
             {
-                if (isPlayer1)
+                if (_isPlayer1Team)
                 {
-                    team1Populated = true;
+                    _team1Populated = true;
                 }
                 else
                 {
-                    team2Populated = true;
+                    _team2Populated = true;
                 }
-                if (!FinalizeTeam(currentTeamNames, isPlayer1 ? team1 : team2)) return false;
+                if (!FinalizeTeam(_currentTeamNames, _isPlayer1Team ? _player1.Team : _player2.Team)) return false;
             }
 
-            return team1Populated && team2Populated;
+            return _team1Populated && _team2Populated;
         }
 
         private (string[] lines, bool isPlayer1, Team team1, Team team2, bool team1Populated
@@ -217,21 +217,21 @@ namespace Fire_Emblem
         public void ChooseCharacters(string selectedFilePath)
         {
             var lines = File.ReadAllLines(selectedFilePath);
-            bool isPlayer1 = true; 
+            _isPlayer1Team = true; 
 
             foreach (var line in lines)
             {
                 if (line == "Player 1 Team")
                 {
-                    isPlayer1 = true;
+                    _isPlayer1Team = true;
                 }
                 else if (line == "Player 2 Team")
                 {
-                    isPlayer1 = false;
+                    _isPlayer1Team = false;
                 }
                 else
                 {
-                    AssignCharacterToTeam(line, isPlayer1 ? _player1.Team : _player2.Team);
+                    AssignCharacterToTeam(line, _isPlayer1Team ? _player1.Team : _player2.Team);
                 }
             }
         }
@@ -239,7 +239,7 @@ namespace Fire_Emblem
 
         private Character CloneCharacter(string characterName)
         {
-            var originalCharacter = characters.FirstOrDefault(c => c.Name == characterName);
+            var originalCharacter = _characters.FirstOrDefault(c => c.Name == characterName);
             if (originalCharacter != null)
             {
                 return new Character
@@ -255,7 +255,7 @@ namespace Fire_Emblem
                     Res = originalCharacter.Res,
                 };
             }
-            
+
             return null;
         }
 
@@ -277,11 +277,11 @@ namespace Fire_Emblem
         private void AssignSkillsToCharacter(Character character, string skillsText) {
             if (!string.IsNullOrEmpty(skillsText)) {
                 var skillNames = skillsText.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
-                var skillFactory = new SkillFactory();  // Asegúrate de que la fábrica es accesible aquí, puede requerir ser una propiedad/variable de la clase
+                var skillFactory = new SkillFactory();
 
                 foreach (var skillName in skillNames) {
                     var trimmedSkillName = skillName.Trim();
-                    var skill = skills.FirstOrDefault(s => s.Name.Equals(trimmedSkillName, StringComparison.OrdinalIgnoreCase));
+                    var skill = _skills.FirstOrDefault(s => s.Name.Equals(trimmedSkillName, StringComparison.OrdinalIgnoreCase));
                     if (skill != null) {
                         skill = skillFactory.CreateSkill(skill.Name, skill.Description);
                     } else {
@@ -309,20 +309,18 @@ namespace Fire_Emblem
 
         public void ImportCharacters()
         {
-            
             string jsonPath = Path.Combine(_teamsFolder, "../..", "characters.json"); 
 
             try
             {
-                
                 string jsonString = File.ReadAllText(jsonPath);
                 var options = new JsonSerializerOptions
                 {
                     PropertyNameCaseInsensitive = true,
                     Converters = { new StringToIntConverter() }
                 };
-                
-                characters = JsonSerializer.Deserialize<List<Character>>(jsonString, options);
+
+                _characters = JsonSerializer.Deserialize<List<Character>>(jsonString, options);
             }
             catch (Exception ex)
             {
@@ -344,11 +342,11 @@ namespace Fire_Emblem
 
                 List<Skill> loadedSkills = JsonSerializer.Deserialize<List<Skill>>(jsonString, options);
                 if (loadedSkills != null) {
-                    skills = new List<Skill>();
+                    _skills = new List<Skill>();
                     var skillFactory = new SkillFactory();
                     foreach (var loadedSkill in loadedSkills) {
                         Skill skill = skillFactory.CreateSkill(loadedSkill.Name, loadedSkill.Description);
-                        skills.Add(skill);
+                        _skills.Add(skill);
                     }
                 }
             }
@@ -357,6 +355,7 @@ namespace Fire_Emblem
                 Console.WriteLine($"Error al importar habilidades: {ex.Message}");
             }
         }
+    
 
     }
 }

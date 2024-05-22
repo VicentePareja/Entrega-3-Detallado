@@ -73,7 +73,8 @@ public class Character
     private void MultiplyToAttributeDictionary(Dictionary<string, double> dictionary, string attribute, int value)
     {
         if (dictionary.ContainsKey(attribute))
-            dictionary[attribute] *= value;
+            dictionary[attribute] = 100 - ((100 - dictionary[attribute]) * (100 - value))/100;
+        
         else
             dictionary.Add(attribute, value);
     }

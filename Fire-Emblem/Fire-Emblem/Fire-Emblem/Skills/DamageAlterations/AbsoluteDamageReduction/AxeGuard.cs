@@ -8,7 +8,7 @@ public class AxeGuard : DamageAlterationSkill
 
     public override void ApplyEffect(Battle battle, Character owner)
     {
-        Combat combat = battle.currentCombat;
+        Combat combat = battle.CurrentCombat;
         Character opponent = (combat._attacker == owner) ? combat._defender : combat._attacker;
         bool isOpponentAxe = opponent.Weapon == "Axe";
         if (isOpponentAxe)

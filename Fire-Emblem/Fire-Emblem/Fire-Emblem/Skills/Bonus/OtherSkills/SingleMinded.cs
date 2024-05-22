@@ -29,10 +29,10 @@ namespace Fire_Emblem {
         }
 
         private Character GetCurrentOpponent(Battle battle, Character owner) {
-            if (battle.currentCombat._attacker == owner) {
-                return battle.currentCombat._defender;
-            } else if (battle.currentCombat._defender == owner) {
-                return battle.currentCombat._attacker;
+            if (battle.CurrentCombat._attacker == owner) {
+                return battle.CurrentCombat._defender;
+            } else if (battle.CurrentCombat._defender == owner) {
+                return battle.CurrentCombat._attacker;
             }
             return null;
         }

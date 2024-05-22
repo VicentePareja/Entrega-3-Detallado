@@ -7,7 +7,7 @@ public class Bravery : DamageAlterationSkill
     }
     public override void ApplyEffect(Battle battle, Character owner)
     {
-        double extraDamage = 5.0; // Daño extra fijo
+        double extraDamage = 5.0;
         owner.AddTemporaryDamageAlteration("ExtraDamage", extraDamage);
     }
 }

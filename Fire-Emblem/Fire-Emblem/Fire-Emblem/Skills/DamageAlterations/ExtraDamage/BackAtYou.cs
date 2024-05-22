@@ -8,7 +8,7 @@ public class BackAtYou : DamageAlterationSkill
 
     public override void ApplyEffect(Battle battle, Character owner)
     {
-        Combat combat = battle.currentCombat;
+        Combat combat = battle.CurrentCombat;
         bool isInitiatorOpponent = combat._attacker != owner;
         if (isInitiatorOpponent)
         {

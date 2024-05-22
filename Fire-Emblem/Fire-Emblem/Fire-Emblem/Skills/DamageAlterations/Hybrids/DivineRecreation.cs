@@ -86,7 +86,7 @@ namespace Fire_Emblem {
 
         private void SetVariables(Battle battle, Character owner)
         {
-            Combat combat = battle.currentCombat;
+            Combat combat = battle.CurrentCombat;
             advantage = combat._advantage;
             Attacker = combat._attacker;
             Defender = combat._defender;
