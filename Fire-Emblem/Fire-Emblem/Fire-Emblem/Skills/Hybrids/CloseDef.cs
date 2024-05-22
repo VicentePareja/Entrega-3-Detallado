@@ -12,11 +12,16 @@ namespace Fire_Emblem {
                 opponent = combat._attacker;
             }
             
-            if (opponent == combat._attacker && (opponent.Weapon == "Sword" || opponent.Weapon == "Lance" || opponent.Weapon == "Axe")) {
+            if (IsDefenderAndAttackerClose(combat, opponent)) {
                 owner.AddTemporaryBonus("Def", 8);
                 owner.AddTemporaryBonus("Res", 8);
                 opponent.DisableAllBonuses();
             }
         }
+        
+        public bool IsDefenderAndAttackerClose(Combat combat, Character opponent) {
+            return opponent == combat._attacker && (opponent.Weapon == "Sword" || opponent.Weapon == "Lance" || opponent.Weapon == "Axe");
+        }
+        
     }
 }

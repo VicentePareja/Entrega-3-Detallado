@@ -1,22 +1,20 @@
 ﻿namespace Fire_Emblem;
 
-public class Skill
+public abstract class Skill
 {
-    public string Name { get; set; }
-    public string Description { get; set; }
+    public string Name { get; private set; }
+    public string Description { get; private set; }
     
-    public bool IsDamageAlteration { get; set; }
+    public bool IsDamageAlteration { get; protected set; }
 
-    public Skill(string name, string description)
+    protected Skill(string name, string description)
     {
         Name = name;
         Description = description;
         IsDamageAlteration = false;
     }
-    public virtual void ApplyEffect(Battle battle, Character owner)
-    {
-        Console.WriteLine($"Applying {Name} to {owner.Name}, base skill class.");
-    }
+    
+    public abstract void ApplyEffect(Battle battle, Character owner);
 
     public void PrintDetails()
     {

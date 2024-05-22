@@ -1,8 +1,8 @@
 namespace Fire_Emblem {
     public class ExtraChivalry : DamageAlterationSkill {
-        int penalty;
+        int _penalty;
         public ExtraChivalry(string name, string description) : base(name, description){ 
-            penalty = -5;
+            _penalty = -5;
         }
 
         public override void ApplyEffect(Battle battle, Character owner) {
@@ -10,14 +10,18 @@ namespace Fire_Emblem {
             Character opponent = (combat._attacker == owner) ? combat._defender : combat._attacker;
             
             if (opponent.CurrentHP >= opponent.MaxHP * 0.5) {
-                opponent.AddTemporaryPenalty("Atk", penalty);
-                opponent.AddTemporaryPenalty("Spd", penalty);
-                opponent.AddTemporaryPenalty("Def", penalty);
+                AddPenalties(opponent);
             }
             
             int hpPercentage = (int)((double)opponent.CurrentHP / opponent.MaxHP * 100);
             int damageReductionPercentage = hpPercentage / 2;
             owner.MultiplyTemporaryDamageAlterations("PercentageReduction", damageReductionPercentage);
+        }
+        
+        public void AddPenalties(Character opponent) {
+            opponent.AddTemporaryPenalty("Atk", _penalty);
+            opponent.AddTemporaryPenalty("Spd", _penalty);
+            opponent.AddTemporaryPenalty("Def", _penalty);
         }
     }
 }

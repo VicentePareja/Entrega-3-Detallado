@@ -11,10 +11,16 @@ namespace Fire_Emblem {
 
             Character opponent = (combat._attacker == owner) ? combat._defender : combat._attacker;
 
-            if (combat._attacker != owner || opponent.CurrentHP == opponent.MaxHP) {
+            if (IsEffectApplied(battle, owner)) {
                 opponent.AddTemporaryPenalty("Atk", Penalty);
                 opponent.AddTemporaryPenalty("Def", Penalty);
             }
+        }
+        public bool IsEffectApplied(Battle battle, Character owner) {
+            
+            Combat combat = battle.CurrentCombat;
+            Character opponent = (combat._attacker == owner) ? combat._defender : combat._attacker;
+            return combat._attacker != owner || opponent.CurrentHP == opponent.MaxHP;
         }
     }
 }
