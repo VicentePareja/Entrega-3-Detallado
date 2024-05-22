@@ -290,11 +290,8 @@ namespace Fire_Emblem
             var skillsText = parts.Length > 1 ? parts[1].TrimEnd(')') : string.Empty;
 
             var newCharacter = CloneCharacter(characterName);
-            if (newCharacter != null)
-            {
-                AssignSkillsToCharacter(newCharacter, skillsText);
-            }
-
+            AssignSkillsToCharacter(newCharacter, skillsText);
+            
             return newCharacter;
         }
 
