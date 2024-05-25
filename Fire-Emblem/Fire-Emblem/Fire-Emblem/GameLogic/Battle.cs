@@ -7,6 +7,7 @@ namespace Fire_Emblem
         private readonly Player _player2;
         private readonly Dictionary<string, string> _advantages;
         private readonly View _view;
+        private readonly BattleInterface _battleInterface;
         private bool _gameFinished = false;
         private int _turn = 0;
         private Character _attackerUnit;
@@ -15,11 +16,12 @@ namespace Fire_Emblem
         public Combat CurrentCombat { get; private set; } = null;
         public List<(Character Attacker, Character Defender)> CombatHistory { get; private set; }
 
-        public Battle(Player player1, Player player2, View view)
+        public Battle(Player player1, Player player2, View view, BattleInterface battleInterface)
         {
             _player1 = player1;
             _player2 = player2;
             _view = view;
+            _battleInterface = battleInterface;
             _advantages = new Dictionary<string, string>
             {
                 {"Sword", "Axe"},

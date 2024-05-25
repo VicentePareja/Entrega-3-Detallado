@@ -15,14 +15,16 @@ namespace Fire_Emblem
         private List<Skill> _skills;
         private Player _player1;
         private Player _player2;
+        private SetUpInterface _setUpInterface;
         private bool _isPlayer1Team = true;
         private bool _team1Populated = false;
         private bool _team2Populated = false;
         
 
-        public SetUpLogic(View view, string teamsFolder)
+        public SetUpLogic(View view, string teamsFolder, SetUpInterface setUpInterface)
         {
             _view = view;
+            _setUpInterface = setUpInterface;
             _teamsFolder = teamsFolder;
             _characters = new List<Character>();
             _skills = new List<Skill>();
@@ -45,24 +47,24 @@ namespace Fire_Emblem
             }
             else
             {
-                _view.WriteLine("Archivo de equipos no válido");
+                _setUpInterface.PrintTeamsNotValid();
                 return false;
             }
         }
 
         private void ShowAvailableFiles()
         {
-            _view.WriteLine("Elige un archivo para cargar los equipos");
+            _setUpInterface.PrintGetTeamsFolder();
             var files = Directory.GetFiles(_teamsFolder, "*.txt");
             if (files.Length == 0)
             {
-                _view.WriteLine("No hay archivos disponibles.");
+                _setUpInterface.PrintNotFilesInFolder();
                 throw new InvalidOperationException("No hay archivos disponibles.");
             }
 
             for (int i = 0; i < files.Length; i++)
             {
-                _view.WriteLine($"{i}: {Path.GetFileName(files[i])}");
+                _setUpInterface.PrintFile(i, Path.GetFileName(files[i]));
             }
         }
 
@@ -311,7 +313,8 @@ namespace Fire_Emblem
             }
             else
             {
-                _view.WriteLine($"Personaje no encontrado: {characterLine.Split(" (", 2)[0]}");
+                _setUpInterface.PrintCharacterNotFound(characterLine.Split(" (", 2)[0]);
+                
             }
         }
 
@@ -331,8 +334,8 @@ namespace Fire_Emblem
                 _characters = JsonSerializer.Deserialize<List<Character>>(jsonString, options);
             }
             catch (Exception ex)
-            {
-                _view.WriteLine($"Error al importar personajes: {ex.Message}");
+            {   
+                _setUpInterface.PrintErrorImportingCharacters(ex.Message);
             }
         }
         

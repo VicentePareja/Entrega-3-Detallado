@@ -5,18 +5,18 @@ public class Attack
 {
     private readonly Character _attacker;
     private readonly Character _defender;
-    private readonly View _view;
+    private readonly CombatInterface _combatInterface;
     private int _damage;
     private double _weaponTriangleBonus;
     private double _reduction;
     private double _extraDamage;
     private double _absoluteReduction;
 
-    public Attack(Character attacker, Character defender, View view)
+    public Attack(Character attacker, Character defender, CombatInterface view)
     {
         _attacker = attacker;
         _defender = defender;
-        _view = view;
+        _combatInterface = view;
     }
     
     public void PerformAttack(string advantage)
@@ -27,7 +27,7 @@ public class Attack
         
         _damage = CalculateBaseDamageForAttack(attackerAtk, defenderDef);
         _damage = ApplyDamageAlterationsForAttack();
-        _view.WriteLine($"{_attacker.Name} ataca a {_defender.Name} con {_damage} de daño");
+        _combatInterface.PrintAttack(_attacker, _defender, _damage);
         _defender.CurrentHP -= _damage;
     }
     
@@ -39,7 +39,7 @@ public class Attack
 
         _damage = CalculateBaseDamageForDefense(defenderAtk, attackerDef);
         _damage = ApplyDamageAlterationsForCounter();
-        _view.WriteLine($"{_defender.Name} ataca a {_attacker.Name} con {_damage} de daño");
+        _combatInterface.PrintAttack(_defender,_attacker , _damage);
         _attacker.CurrentHP -= _damage;
     }
     
@@ -51,7 +51,7 @@ public class Attack
 
         _damage = CalculateBaseDamageForAttack(attackerAtk, defenderDef);
         _damage = ApplyDamageAlterationsForFollowUp();
-        _view.WriteLine($"{_attacker.Name} ataca a {_defender.Name} con {_damage} de daño");
+        _combatInterface.PrintAttack(_attacker, _defender, _damage);
 
         _defender.CurrentHP -= _damage;
     }
@@ -64,7 +64,7 @@ public class Attack
 
         _damage = CalculateBaseDamageForDefense(defenderAtk, attackerDef);
         _damage = ApplyDamageAlterationsForDefense();
-        _view.WriteLine($"{_defender.Name} ataca a {_attacker.Name} con {_damage} de daño");
+        _combatInterface.PrintAttack(_defender,_attacker , _damage);
 
         _attacker.CurrentHP -= _damage;
     }
