@@ -12,4 +12,8 @@
       <ProjectReference Include="..\Fire-Emblem-View\Fire-Emblem-View.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="Model\" />
+    </ItemGroup>
+
 </Project>

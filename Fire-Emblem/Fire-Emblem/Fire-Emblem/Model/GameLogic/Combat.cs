@@ -7,17 +7,15 @@ namespace Fire_Emblem
         public readonly Character _attacker;
         public readonly Character _defender;
         public readonly string _advantage;
-        private readonly View _view;
         private readonly CombatInterface _combatInterface;
-        public Battle _battle;
+        private readonly Battle _battle;
 
-        public Combat(Character attacker, Character defender, string advantage, View view, Battle battle)
+        public Combat(Character attacker, Character defender, string advantage, CombatInterface combatInterface, Battle battle)
         {
             _attacker = attacker;
             _defender = defender;
             _advantage = advantage;
-            _view = view;
-            _combatInterface = new CombatInterface(view);
+            _combatInterface = combatInterface;
             _battle = battle;
         }
 

@@ -6,8 +6,8 @@ namespace Fire_Emblem
         private readonly Player _player1;
         private readonly Player _player2;
         private readonly Dictionary<string, string> _advantages;
-        private readonly View _view;
         private readonly BattleInterface _battleInterface;
+        private readonly BattleController _battleController;
         private bool _gameFinished = false;
         private int _turn = 0;
         private Character _attackerUnit;
@@ -16,12 +16,12 @@ namespace Fire_Emblem
         public Combat CurrentCombat { get; private set; } = null;
         public List<(Character Attacker, Character Defender)> CombatHistory { get; private set; }
 
-        public Battle(Player player1, Player player2, View view, BattleInterface battleInterface)
+        public Battle(Player player1, Player player2, BattleInterface battleInterface, BattleController battleController)
         {
             _player1 = player1;
             _player2 = player2;
-            _view = view;
             _battleInterface = battleInterface;
+            _battleController = battleController;
             _advantages = new Dictionary<string, string>
             {
                 {"Sword", "Axe"},
@@ -55,7 +55,7 @@ namespace Fire_Emblem
         {
             _attackerUnit = ChooseUnit(attackerPlayer);
             _defenderUnit = ChooseUnit(defenderPlayer);
-            _view.WriteLine($"Round {_turn}: {_attackerUnit.Name} ({attackerPlayer.Name}) comienza");
+            _battleInterface.PrintRoundStart(_turn, _attackerUnit, attackerPlayer);
             _currentAdvantage = CalculateAdvantage();
             PrintAdvantage();
 
@@ -65,7 +65,7 @@ namespace Fire_Emblem
         private void PerformTurn(Player attackerPlayer, Player defenderPlayer)
         {
             PrepareAttack(attackerPlayer, defenderPlayer);
-            CurrentCombat = new Combat( _attackerUnit, _defenderUnit, _currentAdvantage, _view, this);
+            CurrentCombat = new Combat( _attackerUnit, _defenderUnit, _currentAdvantage, _battleInterface.CombatInterface, this);
             CurrentCombat.Start();
             CombatHistory.Add((Attacker: _attackerUnit, Defender: _defenderUnit));
             
@@ -78,8 +78,6 @@ namespace Fire_Emblem
                 defenderPlayer.Team.Characters.Remove(_defenderUnit);
             }
         }
-
-        
 
         public string CalculateAdvantage()
         {
@@ -111,44 +109,40 @@ namespace Fire_Emblem
             switch (_currentAdvantage)
             {
                 case "atacante":
-                    _view.WriteLine($"{_attackerUnit.Name} ({_attackerUnit.Weapon}) tiene ventaja con respecto a {_defenderUnit.Name} ({_defenderUnit.Weapon})");
+                    _battleInterface.PrintAdvantage(_attackerUnit, _defenderUnit);
                     break;
                 case "defensor":
-                    _view.WriteLine($"{_defenderUnit.Name} ({_defenderUnit.Weapon}) tiene ventaja con respecto a {_attackerUnit.Name} ({_attackerUnit.Weapon})");
+                    _battleInterface.PrintAdvantage(_defenderUnit, _attackerUnit);
                     break;
                 default:
-                    _view.WriteLine("Ninguna unidad tiene ventaja con respecto a la otra");
+                    _battleInterface.PrintNotAdvantage();
                     break;
             }
         }
-
-        private void PrintCharacterOptions(Player player)
-        {
-            _view.WriteLine($"{player.Name} selecciona una opción");
-            for (int i = 0; i < player.Team.Characters.Count; i++)
-            {
-                _view.WriteLine($"{i}: {player.Team.Characters[i].Name}");
-            }
-        }
-
+        
         private Character ChooseUnit(Player player)
         {
-            PrintCharacterOptions(player); 
+            _battleInterface.PrintCharacterOptions(player); 
             int choice = -1; 
             do
             {
-                string input = _view.ReadLine();
-                if (int.TryParse(input, out choice) && choice >= 0 && choice < player.Team.Characters.Count)
+                string unitIndex = _battleController.GetUnitIndex();
+                if (IsValidCharacter(unitIndex, player, out choice))
                 {
                     break;
                 }
                 else
                 {
-                    _view.WriteLine("Elección inválida. Por favor, elige de nuevo.");
+                    _battleInterface.PrintNotValidOption();
                 }
             } while (true); 
 
             return player.Team.Characters[choice];
+        }
+
+        private bool IsValidCharacter(string input, Player player, out int choice)
+        {
+            return int.TryParse(input, out choice) && choice >= 0 && choice < player.Team.Characters.Count;
         }
 
 
@@ -161,15 +155,15 @@ namespace Fire_Emblem
         {
             if (_player1.Team.Characters.Count == 0)
             {
-                _view.WriteLine($"{_player2.Name} ganó");
+                _battleInterface.PrintWinner(_player2);
             }
             else if (_player2.Team.Characters.Count == 0)
             {
-                _view.WriteLine($"{_player1.Name} ganó");
+                _battleInterface.PrintWinner(_player1);
             }
             else
             {
-                _view.WriteLine("Empate!");
+                _battleInterface.PrintTie();
             }
         }
     }

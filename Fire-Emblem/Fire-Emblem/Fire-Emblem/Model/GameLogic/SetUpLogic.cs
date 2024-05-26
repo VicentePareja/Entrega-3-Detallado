@@ -8,23 +8,23 @@ namespace Fire_Emblem
 {
     public class SetUpLogic
     {
-        private readonly View _view;
         private readonly string _teamsFolder;
         private readonly List<string> _currentTeamNames = new List<string>();
         private List<Character> _characters;
         private List<Skill> _skills;
         private Player _player1;
         private Player _player2;
-        private SetUpInterface _setUpInterface;
+        private readonly SetUpInterface _setUpInterface;
+        private readonly SetUpController _setUpController;
         private bool _isPlayer1Team = true;
         private bool _team1Populated = false;
         private bool _team2Populated = false;
         
 
-        public SetUpLogic(View view, string teamsFolder, SetUpInterface setUpInterface)
+        public SetUpLogic(string teamsFolder, SetUpInterface setUpInterface, SetUpController setUpController)
         {
-            _view = view;
             _setUpInterface = setUpInterface;
+            _setUpController = setUpController;
             _teamsFolder = teamsFolder;
             _characters = new List<Character>();
             _skills = new List<Skill>();
@@ -70,7 +70,7 @@ namespace Fire_Emblem
 
         private string SelectFile()
         {
-            string input = _view.ReadLine();
+            string input = _setUpController.GetTeamsFolder();
             var files = Directory.GetFiles(_teamsFolder, "*.txt");
             if (int.TryParse(input, out int fileIndex) && fileIndex >= 0 && fileIndex < files.Length)
             {
