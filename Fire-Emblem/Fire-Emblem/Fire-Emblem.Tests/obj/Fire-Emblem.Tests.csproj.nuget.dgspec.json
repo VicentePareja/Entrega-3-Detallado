@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Vicente Pareja\\Desktop\\Universidad\\2024\\Semetre 1\\Diseño detallado\\Entrega 3\\Entrega-3-Detallado\\Fire-Emblem\\Fire-Emblem\\Fire-Emblem.Tests\\Fire-Emblem.Tests.csproj": {}
+    "C:\\Users\\Vicente Pareja\\Desktop\\Universidad\\2024\\Semetre 1\\Diseño detallado\\Entregas Proyecto\\Entrega 3\\Entrega-3-Detallado\\Fire-Emblem\\Fire-Emblem\\Fire-Emblem.Tests\\Fire-Emblem.Tests.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Vicente Pareja\\Desktop\\Universidad\\2024\\Semetre 1\\Diseño detallado\\Entrega 3\\Entrega-3-Detallado\\Fire-Emblem\\Fire-Emblem\\Fire-Emblem-View\\Fire-Emblem-View.csproj": {
+    "C:\\Users\\Vicente Pareja\\Desktop\\Universidad\\2024\\Semetre 1\\Diseño detallado\\Entregas Proyecto\\Entrega 3\\Entrega-3-Detallado\\Fire-Emblem\\Fire-Emblem\\Fire-Emblem-View\\Fire-Emblem-View.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Vicente Pareja\\Desktop\\Universidad\\2024\\Semetre 1\\Diseño detallado\\Entrega 3\\Entrega-3-Detallado\\Fire-Emblem\\Fire-Emblem\\Fire-Emblem-View\\Fire-Emblem-View.csproj",
+        "projectUniqueName": "C:\\Users\\Vicente Pareja\\Desktop\\Universidad\\2024\\Semetre 1\\Diseño detallado\\Entregas Proyecto\\Entrega 3\\Entrega-3-Detallado\\Fire-Emblem\\Fire-Emblem\\Fire-Emblem-View\\Fire-Emblem-View.csproj",
         "projectName": "Fire-Emblem-View",
-        "projectPath": "C:\\Users\\Vicente Pareja\\Desktop\\Universidad\\2024\\Semetre 1\\Diseño detallado\\Entrega 3\\Entrega-3-Detallado\\Fire-Emblem\\Fire-Emblem\\Fire-Emblem-View\\Fire-Emblem-View.csproj",
+        "projectPath": "C:\\Users\\Vicente Pareja\\Desktop\\Universidad\\2024\\Semetre 1\\Diseño detallado\\Entregas Proyecto\\Entrega 3\\Entrega-3-Detallado\\Fire-Emblem\\Fire-Emblem\\Fire-Emblem-View\\Fire-Emblem-View.csproj",
         "packagesPath": "C:\\Users\\Vicente Pareja\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Vicente Pareja\\Desktop\\Universidad\\2024\\Semetre 1\\Diseño detallado\\Entrega 3\\Entrega-3-Detallado\\Fire-Emblem\\Fire-Emblem\\Fire-Emblem-View\\obj\\",
+        "outputPath": "C:\\Users\\Vicente Pareja\\Desktop\\Universidad\\2024\\Semetre 1\\Diseño detallado\\Entregas Proyecto\\Entrega 3\\Entrega-3-Detallado\\Fire-Emblem\\Fire-Emblem\\Fire-Emblem-View\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Vicente Pareja\\AppData\\Roaming\\NuGet\\NuGet.Config"
@@ -57,14 +57,14 @@
         }
       }
     },
-    "C:\\Users\\Vicente Pareja\\Desktop\\Universidad\\2024\\Semetre 1\\Diseño detallado\\Entrega 3\\Entrega-3-Detallado\\Fire-Emblem\\Fire-Emblem\\Fire-Emblem.Tests\\Fire-Emblem.Tests.csproj": {
+    "C:\\Users\\Vicente Pareja\\Desktop\\Universidad\\2024\\Semetre 1\\Diseño detallado\\Entregas Proyecto\\Entrega 3\\Entrega-3-Detallado\\Fire-Emblem\\Fire-Emblem\\Fire-Emblem.Tests\\Fire-Emblem.Tests.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Vicente Pareja\\Desktop\\Universidad\\2024\\Semetre 1\\Diseño detallado\\Entrega 3\\Entrega-3-Detallado\\Fire-Emblem\\Fire-Emblem\\Fire-Emblem.Tests\\Fire-Emblem.Tests.csproj",
+        "projectUniqueName": "C:\\Users\\Vicente Pareja\\Desktop\\Universidad\\2024\\Semetre 1\\Diseño detallado\\Entregas Proyecto\\Entrega 3\\Entrega-3-Detallado\\Fire-Emblem\\Fire-Emblem\\Fire-Emblem.Tests\\Fire-Emblem.Tests.csproj",
         "projectName": "Fire-Emblem.Tests",
-        "projectPath": "C:\\Users\\Vicente Pareja\\Desktop\\Universidad\\2024\\Semetre 1\\Diseño detallado\\Entrega 3\\Entrega-3-Detallado\\Fire-Emblem\\Fire-Emblem\\Fire-Emblem.Tests\\Fire-Emblem.Tests.csproj",
+        "projectPath": "C:\\Users\\Vicente Pareja\\Desktop\\Universidad\\2024\\Semetre 1\\Diseño detallado\\Entregas Proyecto\\Entrega 3\\Entrega-3-Detallado\\Fire-Emblem\\Fire-Emblem\\Fire-Emblem.Tests\\Fire-Emblem.Tests.csproj",
         "packagesPath": "C:\\Users\\Vicente Pareja\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Vicente Pareja\\Desktop\\Universidad\\2024\\Semetre 1\\Diseño detallado\\Entrega 3\\Entrega-3-Detallado\\Fire-Emblem\\Fire-Emblem\\Fire-Emblem.Tests\\obj\\",
+        "outputPath": "C:\\Users\\Vicente Pareja\\Desktop\\Universidad\\2024\\Semetre 1\\Diseño detallado\\Entregas Proyecto\\Entrega 3\\Entrega-3-Detallado\\Fire-Emblem\\Fire-Emblem\\Fire-Emblem.Tests\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Vicente Pareja\\AppData\\Roaming\\NuGet\\NuGet.Config"
@@ -79,11 +79,11 @@
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "C:\\Users\\Vicente Pareja\\Desktop\\Universidad\\2024\\Semetre 1\\Diseño detallado\\Entrega 3\\Entrega-3-Detallado\\Fire-Emblem\\Fire-Emblem\\Fire-Emblem-View\\Fire-Emblem-View.csproj": {
-                "projectPath": "C:\\Users\\Vicente Pareja\\Desktop\\Universidad\\2024\\Semetre 1\\Diseño detallado\\Entrega 3\\Entrega-3-Detallado\\Fire-Emblem\\Fire-Emblem\\Fire-Emblem-View\\Fire-Emblem-View.csproj"
+              "C:\\Users\\Vicente Pareja\\Desktop\\Universidad\\2024\\Semetre 1\\Diseño detallado\\Entregas Proyecto\\Entrega 3\\Entrega-3-Detallado\\Fire-Emblem\\Fire-Emblem\\Fire-Emblem-View\\Fire-Emblem-View.csproj": {
+                "projectPath": "C:\\Users\\Vicente Pareja\\Desktop\\Universidad\\2024\\Semetre 1\\Diseño detallado\\Entregas Proyecto\\Entrega 3\\Entrega-3-Detallado\\Fire-Emblem\\Fire-Emblem\\Fire-Emblem-View\\Fire-Emblem-View.csproj"
               },
-              "C:\\Users\\Vicente Pareja\\Desktop\\Universidad\\2024\\Semetre 1\\Diseño detallado\\Entrega 3\\Entrega-3-Detallado\\Fire-Emblem\\Fire-Emblem\\Fire-Emblem\\Fire-Emblem.csproj": {
-                "projectPath": "C:\\Users\\Vicente Pareja\\Desktop\\Universidad\\2024\\Semetre 1\\Diseño detallado\\Entrega 3\\Entrega-3-Detallado\\Fire-Emblem\\Fire-Emblem\\Fire-Emblem\\Fire-Emblem.csproj"
+              "C:\\Users\\Vicente Pareja\\Desktop\\Universidad\\2024\\Semetre 1\\Diseño detallado\\Entregas Proyecto\\Entrega 3\\Entrega-3-Detallado\\Fire-Emblem\\Fire-Emblem\\Fire-Emblem\\Fire-Emblem.csproj": {
+                "projectPath": "C:\\Users\\Vicente Pareja\\Desktop\\Universidad\\2024\\Semetre 1\\Diseño detallado\\Entregas Proyecto\\Entrega 3\\Entrega-3-Detallado\\Fire-Emblem\\Fire-Emblem\\Fire-Emblem\\Fire-Emblem.csproj"
               }
             }
           }
@@ -135,14 +135,14 @@
         }
       }
     },
-    "C:\\Users\\Vicente Pareja\\Desktop\\Universidad\\2024\\Semetre 1\\Diseño detallado\\Entrega 3\\Entrega-3-Detallado\\Fire-Emblem\\Fire-Emblem\\Fire-Emblem\\Fire-Emblem.csproj": {
+    "C:\\Users\\Vicente Pareja\\Desktop\\Universidad\\2024\\Semetre 1\\Diseño detallado\\Entregas Proyecto\\Entrega 3\\Entrega-3-Detallado\\Fire-Emblem\\Fire-Emblem\\Fire-Emblem\\Fire-Emblem.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Vicente Pareja\\Desktop\\Universidad\\2024\\Semetre 1\\Diseño detallado\\Entrega 3\\Entrega-3-Detallado\\Fire-Emblem\\Fire-Emblem\\Fire-Emblem\\Fire-Emblem.csproj",
+        "projectUniqueName": "C:\\Users\\Vicente Pareja\\Desktop\\Universidad\\2024\\Semetre 1\\Diseño detallado\\Entregas Proyecto\\Entrega 3\\Entrega-3-Detallado\\Fire-Emblem\\Fire-Emblem\\Fire-Emblem\\Fire-Emblem.csproj",
         "projectName": "Fire-Emblem",
-        "projectPath": "C:\\Users\\Vicente Pareja\\Desktop\\Universidad\\2024\\Semetre 1\\Diseño detallado\\Entrega 3\\Entrega-3-Detallado\\Fire-Emblem\\Fire-Emblem\\Fire-Emblem\\Fire-Emblem.csproj",
+        "projectPath": "C:\\Users\\Vicente Pareja\\Desktop\\Universidad\\2024\\Semetre 1\\Diseño detallado\\Entregas Proyecto\\Entrega 3\\Entrega-3-Detallado\\Fire-Emblem\\Fire-Emblem\\Fire-Emblem\\Fire-Emblem.csproj",
         "packagesPath": "C:\\Users\\Vicente Pareja\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Vicente Pareja\\Desktop\\Universidad\\2024\\Semetre 1\\Diseño detallado\\Entrega 3\\Entrega-3-Detallado\\Fire-Emblem\\Fire-Emblem\\Fire-Emblem\\obj\\",
+        "outputPath": "C:\\Users\\Vicente Pareja\\Desktop\\Universidad\\2024\\Semetre 1\\Diseño detallado\\Entregas Proyecto\\Entrega 3\\Entrega-3-Detallado\\Fire-Emblem\\Fire-Emblem\\Fire-Emblem\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Vicente Pareja\\AppData\\Roaming\\NuGet\\NuGet.Config"
@@ -157,8 +157,8 @@
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "C:\\Users\\Vicente Pareja\\Desktop\\Universidad\\2024\\Semetre 1\\Diseño detallado\\Entrega 3\\Entrega-3-Detallado\\Fire-Emblem\\Fire-Emblem\\Fire-Emblem-View\\Fire-Emblem-View.csproj": {
-                "projectPath": "C:\\Users\\Vicente Pareja\\Desktop\\Universidad\\2024\\Semetre 1\\Diseño detallado\\Entrega 3\\Entrega-3-Detallado\\Fire-Emblem\\Fire-Emblem\\Fire-Emblem-View\\Fire-Emblem-View.csproj"
+              "C:\\Users\\Vicente Pareja\\Desktop\\Universidad\\2024\\Semetre 1\\Diseño detallado\\Entregas Proyecto\\Entrega 3\\Entrega-3-Detallado\\Fire-Emblem\\Fire-Emblem\\Fire-Emblem-View\\Fire-Emblem-View.csproj": {
+                "projectPath": "C:\\Users\\Vicente Pareja\\Desktop\\Universidad\\2024\\Semetre 1\\Diseño detallado\\Entregas Proyecto\\Entrega 3\\Entrega-3-Detallado\\Fire-Emblem\\Fire-Emblem\\Fire-Emblem-View\\Fire-Emblem-View.csproj"
               }
             }
           }

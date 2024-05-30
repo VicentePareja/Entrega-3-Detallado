@@ -9,6 +9,8 @@ namespace Fire_Emblem
         public readonly string _advantage;
         private readonly CombatInterface _combatInterface;
         private readonly Battle _battle;
+        private readonly PlayerSkillCleaner _playerSkillCleaner;
+        private readonly SkillApplier _skillApplier;
 
         public Combat(Character attacker, Character defender, string advantage, CombatInterface combatInterface, Battle battle)
         {
@@ -17,6 +19,8 @@ namespace Fire_Emblem
             _advantage = advantage;
             _combatInterface = combatInterface;
             _battle = battle;
+            _playerSkillCleaner = new PlayerSkillCleaner();
+            _skillApplier = new SkillApplier(_battle);
         }
 
         public void Start()
@@ -28,7 +32,7 @@ namespace Fire_Emblem
 
         private void PrepareCombat()
         {
-            ApplySkills();
+            _skillApplier.ApplySkills(_attacker, _defender);
             _combatInterface.PrintSkills(_attacker);
             _combatInterface.PrintSkills(_defender);
         }
@@ -48,59 +52,10 @@ namespace Fire_Emblem
         
         private void FinalizeCombat()
         {
-            ClearTemporaryBonuses();
-            ClearTemporaryPenalties();
-            CleanTemporaryDamageAlterations();
+            _playerSkillCleaner.ClearSkills(_attacker);
+            _playerSkillCleaner.ClearSkills(_defender);
             _combatInterface.PrintFinalState(_attacker, _defender);
         }
-
-        private void ApplySkills() {
-            ApplyAttackerSkills();
-            ApplyDefenderSkills();
-            ApplyAttackerDamageAlterationSkills();
-            ApplyDefenderDamageAlterationSkills();
-        }
-
-        private void ApplyAttackerSkills()
-        {
-            foreach (var skill in _attacker.Skills) {
-                if (!skill.IsDamageAlteration)
-                {
-                    skill.ApplyEffect(_battle, _attacker);
-                }
-            }
-        }
-        
-        private void ApplyDefenderSkills()
-        {
-            foreach (var skill in _defender.Skills) {
-                if (!skill.IsDamageAlteration)
-                {
-                    skill.ApplyEffect(_battle, _defender);
-                }
-            }
-        }
-        
-        private void ApplyAttackerDamageAlterationSkills()
-        {
-            foreach (var skill in _attacker.Skills) {
-                if (skill.IsDamageAlteration)
-                {
-                    skill.ApplyEffect(_battle, _attacker);
-                }
-            }
-        }
-        
-        private void ApplyDefenderDamageAlterationSkills()
-        {
-            foreach (var skill in _defender.Skills) {
-                if (skill.IsDamageAlteration)
-                {
-                    skill.ApplyEffect(_battle, _defender);
-                }
-            }
-        }
-
         private void PerformInitialAttack()
         {
             Attack attack = new Attack(_attacker, _defender, _combatInterface);
@@ -136,38 +91,5 @@ namespace Fire_Emblem
             }
         }
         
-        private void ClearTemporaryBonuses()
-        {
-            _attacker.CleanBonuses();
-            _defender.CleanBonuses();
-            _attacker.CleanFirstAttackBonuses();
-            _defender.CleanFirstAttackBonuses();
-            _attacker.CleanFollowUpBonuses();
-            _defender.CleanFollowUpBonuses();
-            _attacker.ReEnableBonuses();
-            _defender.ReEnableBonuses();
-        }
-
-        private void ClearTemporaryPenalties()
-        {
-            _attacker.CleanPenalties();
-            _defender.CleanPenalties();
-            _attacker.CleanFirstAttackPenalties();
-            _defender.CleanFirstAttackPenalties();
-            _attacker.CleanFollowUpPenalties();
-            _defender.CleanFollowUpPenalties();
-            _attacker.ReEnablePenalties();
-            _defender.ReEnablePenalties();
-        }
-
-        private void CleanTemporaryDamageAlterations()
-        {
-            _attacker.CleanFirstAttackDamageAlterations();
-            _defender.CleanFirstAttackDamageAlterations();
-            _attacker.CleanTemporaryDamageAlterations();
-            _defender.CleanTemporaryDamageAlterations();
-            _attacker.CleanFollowUpDamageAlterations();
-            _defender.CleanFollowUpDamageAlterations();
-        }
     }
 }

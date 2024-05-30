@@ -45,4 +45,20 @@ public class BattleInterface
     {
         _view.WriteLine("Empate!");
     }
+
+    public void PrintAdvantages(string advantage, Character attackerUnit, Character defenderUnit)
+    {
+        switch (advantage)
+        {
+            case "atacante":
+                PrintAdvantage(attackerUnit, defenderUnit);
+                break;
+            case "defensor":
+                PrintAdvantage(defenderUnit, attackerUnit);
+                break;
+            default:
+                PrintNotAdvantage();
+                break;
+        }
+    }
 }

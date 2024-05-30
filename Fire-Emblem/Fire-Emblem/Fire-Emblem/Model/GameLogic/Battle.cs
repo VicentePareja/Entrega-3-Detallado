@@ -57,8 +57,7 @@ namespace Fire_Emblem
             _defenderUnit = ChooseUnit(defenderPlayer);
             _battleInterface.PrintRoundStart(_turn, _attackerUnit, attackerPlayer);
             _currentAdvantage = CalculateAdvantage();
-            PrintAdvantage();
-
+            _battleInterface.PrintAdvantages(_currentAdvantage, _attackerUnit, _defenderUnit);
         }
         
         
@@ -78,6 +77,7 @@ namespace Fire_Emblem
                 defenderPlayer.Team.Characters.Remove(_defenderUnit);
             }
         }
+        
 
         public string CalculateAdvantage()
         {
@@ -103,22 +103,8 @@ namespace Fire_Emblem
             return _advantages.ContainsKey(_defenderUnit.Weapon) &&
                    _advantages[_defenderUnit.Weapon] == _attackerUnit.Weapon;
         }
-
-        private void PrintAdvantage()
-        {
-            switch (_currentAdvantage)
-            {
-                case "atacante":
-                    _battleInterface.PrintAdvantage(_attackerUnit, _defenderUnit);
-                    break;
-                case "defensor":
-                    _battleInterface.PrintAdvantage(_defenderUnit, _attackerUnit);
-                    break;
-                default:
-                    _battleInterface.PrintNotAdvantage();
-                    break;
-            }
-        }
+        
+        
         
         private Character ChooseUnit(Player player)
         {
