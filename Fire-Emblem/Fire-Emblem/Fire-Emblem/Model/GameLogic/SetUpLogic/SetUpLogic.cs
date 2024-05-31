@@ -20,6 +20,7 @@ namespace Fire_Emblem
         private bool _team1Populated = false;
         private bool _team2Populated = false;
         private CharacterFileImporter _characterFileImporter;
+        private SkillFileImporter _skillFileImporter;
         
 
         public SetUpLogic(string teamsFolder, SetUpInterface setUpInterface, SetUpController setUpController)
@@ -30,6 +31,7 @@ namespace Fire_Emblem
             _characters = new List<Character>();
             _skills = new List<Skill>();
             _characterFileImporter = new CharacterFileImporter(Path.Combine(_teamsFolder, "../.."));
+            _skillFileImporter = new SkillFileImporter(Path.Combine(_teamsFolder, "../.."));
         }
 
         public bool LoadTeams(Player player1, Player player2)
@@ -39,8 +41,7 @@ namespace Fire_Emblem
     
             ShowAvailableFiles();
             string selectedFile = SelectFile();
-            ImportCharacters();
-            ImportSkills();
+            ImportFiles();
     
             if (ValidTeams(selectedFile))
             {
@@ -317,40 +318,12 @@ namespace Fire_Emblem
                 
             }
         }
-
-        public void ImportCharacters()
-        {
-                _characters = _characterFileImporter.ImportCharacters();
-        }
         
-        public void ImportSkills()
+        public void ImportFiles()
         {
-            string jsonPath = Path.Combine(_teamsFolder, "../..", "skills.json");
-
-            try
-            {
-                string jsonString = File.ReadAllText(jsonPath);
-                var options = new JsonSerializerOptions
-                {
-                    PropertyNameCaseInsensitive = true
-                };
-
-                List<Skill> loadedSkills = JsonSerializer.Deserialize<List<Skill>>(jsonString, options);
-                if (loadedSkills != null) {
-                    _skills = new List<Skill>();
-                    var skillFactory = new SkillFactory();
-                    foreach (var loadedSkill in loadedSkills) {
-                        Skill skill = skillFactory.CreateSkill(loadedSkill.Name, loadedSkill.Description);
-                        _skills.Add(skill);
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Error al importar habilidades: {ex.Message}");
-            }
+            _characters = _characterFileImporter.ImportCharacters();
+            _skills = _skillFileImporter.ImportSkills();
         }
-    
 
     }
 }
