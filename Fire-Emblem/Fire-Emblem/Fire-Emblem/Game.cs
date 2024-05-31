@@ -26,7 +26,7 @@ namespace Fire_Emblem
         public void Play()
         {
            
-            SetUpLogic logic = new SetUpLogic(_teamsFolder, _setUpInterface, _setUpController);
+            SetUpLogic logic = new SetUpLogic(_teamsFolder, _setUpInterface, _setUpController, _player1, _player2);
 
             if (logic.LoadTeams(_player1, _player2))
             {

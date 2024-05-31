@@ -8,23 +8,23 @@ namespace Fire_Emblem
 {
     public class SetUpLogic
     {
+        private readonly Player _player1;
+        private readonly Player _player2;
         private readonly string _teamsFolder;
-        private readonly List<string> _currentTeamNames = new List<string>();
         private List<Character> _characters;
         private List<Skill> _skills;
-        private Player _player1;
-        private Player _player2;
         private readonly SetUpInterface _setUpInterface;
         private readonly SetUpController _setUpController;
         private bool _isPlayer1Team = true;
-        private bool _team1Populated = false;
-        private bool _team2Populated = false;
-        private CharacterFileImporter _characterFileImporter;
-        private SkillFileImporter _skillFileImporter;
+        private readonly CharacterFileImporter _characterFileImporter;
+        private readonly SkillFileImporter _skillFileImporter;
+        private readonly TeamsValidator _teamsValidator;
         
 
-        public SetUpLogic(string teamsFolder, SetUpInterface setUpInterface, SetUpController setUpController)
+        public SetUpLogic(string teamsFolder, SetUpInterface setUpInterface, SetUpController setUpController, Player player1, Player player2)
         {
+            _player1 = player1;
+            _player2 = player2;
             _setUpInterface = setUpInterface;
             _setUpController = setUpController;
             _teamsFolder = teamsFolder;
@@ -32,13 +32,12 @@ namespace Fire_Emblem
             _skills = new List<Skill>();
             _characterFileImporter = new CharacterFileImporter(Path.Combine(_teamsFolder, "../.."));
             _skillFileImporter = new SkillFileImporter(Path.Combine(_teamsFolder, "../.."));
+            _teamsValidator = new TeamsValidator(this, _player1, _player2);
         }
 
         public bool LoadTeams(Player player1, Player player2)
         {
-            _player1 = player1;
-            _player2 = player2;
-    
+
             ShowAvailableFiles();
             string selectedFile = SelectFile();
             ImportFiles();
@@ -84,168 +83,7 @@ namespace Fire_Emblem
                 return null;
             }
         }
-
-
-        public bool ValidTeams(string selectedFile)
-        {
-            var lines = File.ReadAllLines(selectedFile);
-            _isPlayer1Team = true;
-            _team1Populated = false;
-            _team2Populated = false;
-            _currentTeamNames.Clear();
-
-            ProcessTeamLines(lines);
-
-            return CheckFinalTeamsPopulated();
-        }
         
-        private void ProcessTeamLines(string[] lines)
-        {
-            foreach (var line in lines)
-            {
-                if (line == "Player 1 Team" || line == "Player 2 Team")
-                {
-                    HandleTeamSwitch(line);
-                }
-                else
-                {
-                    AddPlayerToTeam(line);
-                }
-            }
-        }
-
-        private void HandleTeamSwitch(string line)
-        {
-            bool switchToPlayer1 = line == "Player 1 Team";
-            if (ShouldSwitchTeams(switchToPlayer1))
-            {
-                if (switchToPlayer1)
-                {
-                    if (!ProcessTeamSwitch(_player2.Team))
-                        return;
-                }
-                else
-                {
-                    if (!ProcessTeamSwitch(_player1.Team))
-                        return;
-                }
-            }
-            _isPlayer1Team = switchToPlayer1;
-        }
-
-        private bool ShouldSwitchTeams(bool switchToPlayer1)
-        {
-            return switchToPlayer1 != _isPlayer1Team && _currentTeamNames.Any();
-        }
-
-        private bool ProcessTeamSwitch(Team team)
-        {
-            _team2Populated = team == _player2.Team;
-            _team1Populated = team == _player1.Team;
-            return FinalizeTeam(_currentTeamNames, team);
-        }
-
-
-        private void AddPlayerToTeam(string playerName)
-        {
-            _currentTeamNames.Add(playerName);
-        }
-
-        
-        private bool CheckFinalTeamsPopulated()
-        {
-            if (_currentTeamNames.Any())
-            {
-                if (_isPlayer1Team)
-                {
-                    _team1Populated = true;
-                }
-                else
-                {
-                    _team2Populated = true;
-                }
-                if (!FinalizeTeam(_currentTeamNames, _isPlayer1Team ? _player1.Team : _player2.Team)) return false;
-            }
-
-            return _team1Populated && _team2Populated;
-        }
-
-        private bool FinalizeTeam(List<string> currentTeamNames, Team team)
-        {
-            bool valid = ValidateAndClearCurrentTeam(currentTeamNames, team);
-            currentTeamNames.Clear();
-            return valid;
-        }
-        
-        private Character CreateCharacterFromLine(string characterLine)
-        {
-            var parts = characterLine.Split(" (", 2);
-            var characterName = parts[0];
-            var skillsText = parts.Length > 1 ? parts[1].TrimEnd(')') : string.Empty;
-
-            var character = new Character { Name = characterName };
-
-            if (!string.IsNullOrEmpty(skillsText))
-            {
-                var skillNames = skillsText.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
-                foreach (var skillName in skillNames)
-                {
-                    var trimmedSkillName = skillName.Trim();
-                    character.AddSkill(new GenericSkill(trimmedSkillName, "Descripción no proporcionada")); 
-                }
-            }
-
-            return character;
-        }
-
-        private bool ValidateTeam(Team team)
-        {
-            return team.IsTeamValid();
-        }
-
-        private void ClearTeamCharacters(Team team)
-        {
-            team.Characters.Clear();
-        }
-
-        private bool ValidateAndClearCurrentTeam(List<string> characterNames, Team team)
-        {
-            foreach (var characterLine in characterNames)
-            {
-                var character = CreateCharacterFromLine(characterLine);
-                team.Characters.Add(character);
-            }
-
-            bool isValid = ValidateTeam(team);
-            ClearTeamCharacters(team);
-
-            return isValid;
-        }
-
-        
-        public void ChooseCharacters(string selectedFilePath)
-        {
-            var lines = File.ReadAllLines(selectedFilePath);
-            _isPlayer1Team = true; 
-
-            foreach (var line in lines)
-            {
-                if (line == "Player 1 Team")
-                {
-                    _isPlayer1Team = true;
-                }
-                else if (line == "Player 2 Team")
-                {
-                    _isPlayer1Team = false;
-                }
-                else
-                {
-                    AssignCharacterToTeam(line, _isPlayer1Team ? _player1.Team : _player2.Team);
-                }
-            }
-        }
-
-
         private Character CloneCharacter(string characterName)
         {
             var originalCharacter = _characters.FirstOrDefault(c => c.Name == characterName);
@@ -324,6 +162,33 @@ namespace Fire_Emblem
             _characters = _characterFileImporter.ImportCharacters();
             _skills = _skillFileImporter.ImportSkills();
         }
+        
+        public void ChooseCharacters(string selectedFilePath)
+        {
+            var lines = File.ReadAllLines(selectedFilePath);
+            _isPlayer1Team = true; 
 
+            foreach (var line in lines)
+            {
+                if (line == "Player 1 Team")
+                {
+                    _isPlayer1Team = true;
+                }
+                else if (line == "Player 2 Team")
+                {
+                    _isPlayer1Team = false;
+                }
+                else
+                {
+                    AssignCharacterToTeam(line, _isPlayer1Team ? _player1.Team : _player2.Team);
+                }
+            }
+        }
+        
+        public bool ValidTeams(string selectedFile)
+        {
+            return _teamsValidator.ValidTeams(selectedFile);
+        }
+        
     }
 }
