@@ -9,9 +9,8 @@ public class TeamsValidator
     private List<string> _currentTeamNames = new List<string>();
     private bool _team1Populated = false;
     private bool _team2Populated = false;
-    public TeamsValidator(SetUpLogic setUpLogic, Player player1, Player player2)
+    public TeamsValidator( Player player1, Player player2)
     {
-        _setUpLogic = setUpLogic;
         _player1 = player1;
         _player2 = player2;
     }
