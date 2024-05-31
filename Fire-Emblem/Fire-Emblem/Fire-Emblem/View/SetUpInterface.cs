@@ -40,4 +40,9 @@ public class SetUpInterface
         _view.WriteLine($"Error al importar personajes: {exception}");
     }
     
+    public void PrintErrorMessage(string exception)
+    {
+        _view.WriteLine($"Error al importar personajes: {exception}");
+    }
+    
 }

@@ -19,6 +19,7 @@ namespace Fire_Emblem
         private bool _isPlayer1Team = true;
         private bool _team1Populated = false;
         private bool _team2Populated = false;
+        private CharacterFileImporter _characterFileImporter;
         
 
         public SetUpLogic(string teamsFolder, SetUpInterface setUpInterface, SetUpController setUpController)
@@ -28,6 +29,7 @@ namespace Fire_Emblem
             _teamsFolder = teamsFolder;
             _characters = new List<Character>();
             _skills = new List<Skill>();
+            _characterFileImporter = new CharacterFileImporter(Path.Combine(_teamsFolder, "../.."));
         }
 
         public bool LoadTeams(Player player1, Player player2)
@@ -301,9 +303,7 @@ namespace Fire_Emblem
                 return skillFactory.CreateSkill(skillName, "Descripción no proporcionada");
             }
         }
-
-
-
+        
         private void AssignCharacterToTeam(string characterLine, Team team)
         {
             var newCharacter = CreateOrCloneCharacter(characterLine);
@@ -320,23 +320,7 @@ namespace Fire_Emblem
 
         public void ImportCharacters()
         {
-            string jsonPath = Path.Combine(_teamsFolder, "../..", "characters.json"); 
-
-            try
-            {
-                string jsonString = File.ReadAllText(jsonPath);
-                var options = new JsonSerializerOptions
-                {
-                    PropertyNameCaseInsensitive = true,
-                    Converters = { new StringToIntConverter() }
-                };
-
-                _characters = JsonSerializer.Deserialize<List<Character>>(jsonString, options);
-            }
-            catch (Exception ex)
-            {   
-                _setUpInterface.PrintErrorImportingCharacters(ex.Message);
-            }
+                _characters = _characterFileImporter.ImportCharacters();
         }
         
         public void ImportSkills()
