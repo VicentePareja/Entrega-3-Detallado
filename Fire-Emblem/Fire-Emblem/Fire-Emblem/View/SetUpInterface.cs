@@ -30,19 +30,4 @@ public class SetUpInterface
         _view.WriteLine($"{index}: {file}");
     }
     
-    public void PrintCharacterNotFound(string character)
-    {
-        _view.WriteLine($"Personaje no encontrado: {character}");
-    }
-
-    public void PrintErrorImportingCharacters(string exception)
-    {
-        _view.WriteLine($"Error al importar personajes: {exception}");
-    }
-    
-    public void PrintErrorMessage(string exception)
-    {
-        _view.WriteLine($"Error al importar personajes: {exception}");
-    }
-    
 }
